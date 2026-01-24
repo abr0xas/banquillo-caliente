@@ -52,14 +52,15 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
                 <div class="w-2 bg-codec-green animate-[bounce_1.1s_infinite] h-6"></div>
              </div>
 
-             <!-- TIMER ISLAND -->
-             <TenureTimer client:load startDate="2021-06-01T12:00:00Z" />
+             <!-- TIMER ISLAND (Restored) -->
+             <TenureTimer client:load startDate="2026-01-12T10:00:00Z" />
 
              <div class="mt-4 w-full px-4">
                 <div class="text-center text-xs mb-1">PROBABILIDAD DESPIDO</div>
                 <div class="w-full bg-codec-dim h-4 border border-codec-green relative">
                     <div class="h-full bg-codec-green absolute left-0 top-0 transition-all duration-1000" style={`width: ${statusLevel}%`}></div>
                 </div>
+                <div class="text-center font-mono text-xl mt-1 text-glow">{statusLevel}%</div>
              </div>
         </div>
 

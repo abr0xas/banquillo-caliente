@@ -1,8 +1,8 @@
 {
   "coach": {
-    "name": "Carlo Ancelotti",
-    "startDate": "2021-06-01T12:00:00Z",
-    "image": "/assets/ancelotti_codec.png"
+    "name": "Álvaro Arbeloa",
+    "startDate": "2026-01-12T10:00:00Z",
+    "image": "/assets/arbeloa_codec.png"
   },
   "opponent": {
     "name": "Villarreal CF",
@@ -10,9 +10,9 @@
     "date": "2026-01-24T21:00:00Z"
   },
   "status": {
-    "level": 60,
-    "description": "RECUPERANDO SEÑAL...",
-    "subtext": "Tras el desastre de Copa y Supercopa, las goleadas a Mónaco y Levante calman la frecuencia."
+    "level": 40,
+    "description": "ESPARTANO AL MANDO",
+    "subtext": "Tras el debut fallido en Copa, el 'Espartano' endereza el rumbo con goleadas. La grada respira... por ahora."
   },
   "recentResults": [
     {
