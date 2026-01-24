@@ -9,9 +9,11 @@ interface Props {
   statusLevel: number;
   coachStartDate: string;
   matchDate: string;
+  homeTeam: { name: string; logo: string };
+  awayTeam: { name: string; logo: string };
 }
 
-const { coachImage, opponentImage, coachName, opponentName, statusLevel, coachStartDate, matchDate } = Astro.props;
+const { coachImage, opponentImage, coachName, opponentName, statusLevel, coachStartDate, matchDate, homeTeam, awayTeam } = Astro.props;
 
 // Frequency Bar Calculation (Visual only)
 const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
@@ -79,14 +81,9 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
 
         <!-- BLOCK 2: TIMER (CENTER) -->
             <div class="w-full py-8 flex flex-col items-center justify-center relative bg-codec-dark border-x-2 border-codec-green/30">
-             <TenureTimer client:load startDate={coachStartDate} matchDate={matchDate} />
+             <TenureTimer client:load startDate={coachStartDate} matchDate={matchDate} homeTeam={homeTeam} awayTeam={awayTeam} />
              <!-- Frequency visual -->
-             <div class="flex items-end gap-1 h-8 mt-4 opacity-50">
-                <div class="w-1 bg-codec-green animate-[bounce_1s_infinite] h-full"></div>
-                <div class="w-1 bg-codec-green animate-[bounce_1.5s_infinite] h-[60%]"></div>
-                <div class="w-1 bg-codec-green animate-[bounce_0.8s_infinite] h-[80%]"></div>
-                <div class="w-1 bg-codec-green animate-[bounce_1.2s_infinite] h-[40%]"></div>
-             </div>
+
         </div>
 
         <!-- BLOCK 3: RIVAL (BOTTOM) -->

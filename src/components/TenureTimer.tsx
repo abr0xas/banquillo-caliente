@@ -3,14 +3,17 @@ import { useState, useEffect } from 'preact/hooks';
 interface Props {
     startDate: string;
     matchDate: string;
+    homeTeam: { name: string; logo: string };
+    awayTeam: { name: string; logo: string };
 }
 
 type Phase = 'SURVIVAL' | 'MATCH';
 
-export default function TenureTimer({ startDate, matchDate }: Props) {
+export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }: Props) {
     const [duration, setDuration] = useState({ days: 0 });
     const [displayDays, setDisplayDays] = useState(0);
     const [matchTime, setMatchTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
+    const [score, setScore] = useState({ home: 0, away: 0 });
     const [phase, setPhase] = useState<Phase>('SURVIVAL');
     const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -40,7 +43,7 @@ export default function TenureTimer({ startDate, matchDate }: Props) {
                 setDisplayDays(target);
                 clearInterval(timer);
 
-                // Start transition to Match phase after a delay
+                // Start transition to MATCH after delay
                 setTimeout(() => {
                     setIsTransitioning(true);
                     setTimeout(() => {
@@ -56,7 +59,7 @@ export default function TenureTimer({ startDate, matchDate }: Props) {
         return () => clearInterval(timer);
     }, [duration.days]);
 
-    // Live Countdown for Match phase
+    // Live Countdown for MATCH phase
     useEffect(() => {
         if (phase !== 'MATCH' || !matchDate) return;
 
@@ -82,37 +85,89 @@ export default function TenureTimer({ startDate, matchDate }: Props) {
         return () => clearInterval(interval);
     }, [phase, matchDate]);
 
+    const handleScore = (team: 'home' | 'away', delta: number) => {
+        setScore(prev => ({ ...prev, [team]: Math.max(0, prev[team] + delta) }));
+    };
+
+    const handleShare = (platform: 'X' | 'WA') => {
+        const text = `¡MISIÓN INTEL! 🚨 Mi pronóstico: ${awayTeam.name} ${score.away}-${score.home} ${homeTeam.name}. ¡La salud de Arbeloa está en juego! 🔥 #BanquilloCaliente`;
+        const url = window.location.href;
+
+        if (platform === 'X') {
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        } else {
+            window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
+        }
+    };
+
     return (
-        <div class={`flex flex-col items-center justify-center w-full h-full text-codec-green transition-all duration-500 ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+        <div class={`w-full flex transition-all duration-500 items-center justify-center ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
 
             {phase === 'SURVIVAL' ? (
-                <>
+                <div class="flex flex-col items-center justify-center w-full min-h-[120px]">
                     <h3 class="text-[10px] uppercase tracking-[0.3em] opacity-70 mb-2 font-bold">Días Sobreviviendo</h3>
                     <div class="font-mono text-8xl md:text-9xl tracking-wider text-glow font-bold animate-pulse">
                         {displayDays}
                     </div>
-                </>
+                </div>
             ) : (
-                <>
-                    <h3 class="text-[10px] uppercase tracking-[0.3em] text-red-500 mb-2 font-bold animate-pulse">PRÓXIMO OBJETIVO: VILLARREAL</h3>
-                    <div class="font-mono text-5xl md:text-7xl tracking-[0.1em] text-glow-sharp font-bold flex gap-2 md:gap-4 items-center">
-                        <div class="flex flex-col items-center leading-none">
-                            <span>{String(matchTime.hours).padStart(2, '0')}</span>
-                            <span class="text-[8px] opacity-50 uppercase mt-1">HRS</span>
+                <div class="flex flex-col items-center w-full gap-4 md:gap-8 min-h-[160px] justify-center">
+                    {/* INTEGRATED SCOREBOARD HUD */}
+                    <div class="flex items-center justify-around w-full max-w-3xl px-2">
+
+                        {/* AWAY TEAM (LEFT) */}
+                        <div class="flex flex-col items-center gap-1 flex-1">
+                            <img src={awayTeam.logo} class="shrink-0 w-8 h-8 md:w-14 md:h-14 object-contain grayscale brightness-125" />
+                            <span class="font-mono text-3xl md:text-6xl font-bold text-codec-green text-glow-sharp">{score.away}</span>
+                            <div class="flex gap-1">
+                                <button onClick={() => handleScore('away', 1)} class="w-5 h-5 flex items-center justify-center border border-codec-green text-[10px] hover:bg-codec-green hover:text-black cursor-pointer">+</button>
+                                <button onClick={() => handleScore('away', -1)} class="w-5 h-5 flex items-center justify-center border border-codec-green text-[10px] hover:bg-codec-green hover:text-black cursor-pointer">-</button>
+                            </div>
+                            <span class="text-[7px] md:text-[8px] uppercase opacity-40 font-bold tracking-widest mt-1 text-center truncate max-w-[60px]">{awayTeam.name}</span>
                         </div>
-                        <span class="pb-4 md:pb-6">:</span>
-                        <div class="flex flex-col items-center leading-none">
-                            <span>{String(matchTime.minutes).padStart(2, '0')}</span>
-                            <span class="text-[8px] opacity-50 uppercase mt-1">MIN</span>
+
+                        {/* CENTER: MASSIVE COUNTDOWN */}
+                        <div class="flex flex-col items-center flex-[1.5] py-2 border-x border-codec-green/10">
+                            <h3 class="text-[7px] md:text-[9px] uppercase tracking-[0.2em] text-red-500 font-bold animate-pulse mb-1">STRIKE CLOCK</h3>
+                            <div class="font-mono text-3xl md:text-7xl tracking-tighter text-glow-sharp font-bold flex gap-1 items-baseline">
+                                <div class="flex flex-col items-center leading-none">
+                                    <span>{String(matchTime.hours).padStart(2, '0')}</span>
+                                    <span class="text-[5px] md:text-[8px] opacity-40 uppercase">HRS</span>
+                                </div>
+                                <span class="opacity-40 animate-pulse text-xl md:text-5xl">:</span>
+                                <div class="flex flex-col items-center leading-none">
+                                    <span>{String(matchTime.minutes).padStart(2, '0')}</span>
+                                    <span class="text-[5px] md:text-[8px] opacity-40 uppercase">MIN</span>
+                                </div>
+                                <span class="opacity-20 text-lg md:text-4xl">:</span>
+                                <div class="flex flex-col items-center opacity-70 leading-none">
+                                    <span class="text-xl md:text-5xl">{String(matchTime.seconds).padStart(2, '0')}</span>
+                                    <span class="text-[5px] md:text-[8px] opacity-40 uppercase">SEC</span>
+                                </div>
+                            </div>
                         </div>
-                        <span class="pb-4 md:pb-6 opacity-50 text-2xl md:text-3xl">:</span>
-                        <div class="flex flex-col items-center text-2xl md:text-3xl opacity-70 leading-none">
-                            <span>{String(matchTime.seconds).padStart(2, '0')}</span>
-                            <span class="text-[8px] opacity-50 uppercase mt-1">SEC</span>
+
+                        {/* HOME TEAM (RIGHT) */}
+                        <div class="flex flex-col items-center gap-1 flex-1">
+                            <img src={homeTeam.logo} class="shrink-0 w-8 h-8 md:w-14 md:h-14 object-contain grayscale brightness-125" />
+                            <span class="font-mono text-3xl md:text-6xl font-bold text-codec-green text-glow-sharp">{score.home}</span>
+                            <div class="flex gap-1">
+                                <button onClick={() => handleScore('home', 1)} class="w-5 h-5 flex items-center justify-center border border-codec-green text-[10px] hover:bg-codec-green hover:text-black cursor-pointer">+</button>
+                                <button onClick={() => handleScore('home', -1)} class="w-5 h-5 flex items-center justify-center border border-codec-green text-[10px] hover:bg-codec-green hover:text-black cursor-pointer">-</button>
+                            </div>
+                            <span class="text-[7px] md:text-[8px] uppercase opacity-40 font-bold tracking-widest mt-1 text-center truncate max-w-[60px]">{homeTeam.name}</span>
                         </div>
+
                     </div>
-                </>
+
+                    {/* MINI SHARE BUTTONS (Icon only) */}
+                    <div class="flex gap-4 items-center">
+                        <button onClick={() => handleShare('X')} class="w-8 h-8 flex items-center justify-center border-2 border-white text-white font-bold text-[10px] bg-black hover:bg-white hover:text-black transition-all shadow-[2px_2px_0_white] cursor-pointer">𝕏</button>
+                        <button onClick={() => handleShare('WA')} class="w-8 h-8 flex items-center justify-center border-2 border-codec-green text-codec-green font-bold text-[10px] bg-black hover:bg-codec-green hover:text-black transition-all shadow-[2px_2px_0_#00ee00] cursor-pointer">WA</button>
+                    </div>
+                </div>
             )}
         </div>
+
     );
 }

@@ -24,6 +24,14 @@ const getResultIcon = (result: string) => {
             statusLevel={status.level}
             coachStartDate={coach.startDate}
             matchDate={opponent.date}
+            homeTeam={{ 
+                name: "Real Madrid", 
+                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/1200px-Real_Madrid_CF.svg.png" 
+            }}
+            awayTeam={{ 
+                name: opponent.name, 
+                logo: opponent.image 
+            }}
         >
             <!-- HUD RESULTS (Overlaid on Image) -->
             <div slot="results-mini" class="flex flex-col gap-0.5">
