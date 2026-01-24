@@ -29,7 +29,7 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
     <div class="w-full flex flex-col gap-4">
         
         <!-- BLOCK 1: COACH (HERO) -->
-        <div class="w-full aspect-[4/3] md:aspect-video relative border-y-4 border-codec-green bg-black group overflow-hidden">
+        <div class="w-full aspect-video md:aspect-video relative border-y-4 border-codec-green bg-black group overflow-hidden">
              <!-- HUD BARS (Top Overlay) -->
              <div class="absolute top-4 left-4 z-20 flex flex-col gap-1 opacity-100">
                 <!-- LIFE BAR (Metal Gear 1 Style) -->
@@ -90,7 +90,7 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
         </div>
 
         <!-- BLOCK 3: RIVAL (BOTTOM) -->
-        <div class="w-full aspect-[4/3] md:aspect-video relative border-2 border-codec-green bg-black overflow-hidden">
+        <div class="w-full aspect-video md:aspect-video relative border-2 border-codec-green bg-black overflow-hidden">
              <!-- RIVAL IMAGE (Full Cover) -->
              <img 
                 src={opponentImage} 
@@ -102,12 +102,12 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
              <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none z-10"></div>
 
              <!-- NAME TAG + RESULTS (Bottom Overlay) -->
-             <div class="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-end">
-                 <div class="bg-codec-dark/90 px-3 py-1 border border-codec-green text-sm md:text-lg font-bold tracking-wider">
+             <div class="absolute bottom-2 left-2 right-2 md:bottom-4 md:left-4 md:right-4 z-20 flex justify-between items-end">
+                 <div class="bg-codec-dark/90 px-2 py-0.5 border border-codec-green text-[10px] md:text-lg font-bold tracking-wider">
                      RIVAL: {opponentName}
                  </div>
                  <!-- RIVAL RESULTS (Overlaid) -->
-                 <div class="flex flex-col gap-0.5 bg-codec-dark/90 px-2 py-1 border border-codec-green">
+                 <div class="flex flex-col gap-0.5 bg-codec-dark/90 px-1 py-0.5 border border-codec-green">
                      <slot name="rival-results" />
                  </div>
              </div>

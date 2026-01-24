@@ -83,32 +83,32 @@ export default function TenureTimer({ startDate, matchDate }: Props) {
     }, [phase, matchDate]);
 
     return (
-        <div class={`flex flex-col items-center justify-center w-full h-full text-codec-green transition-all duration-500 ${isTransitioning ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
+        <div class={`flex flex-col items-center justify-center w-full h-full text-codec-green transition-all duration-500 ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
 
             {phase === 'SURVIVAL' ? (
                 <>
-                    <h3 class="text-xs uppercase tracking-[0.3em] opacity-70 mb-2 font-bold">Días Sobreviviendo</h3>
+                    <h3 class="text-[10px] uppercase tracking-[0.3em] opacity-70 mb-2 font-bold">Días Sobreviviendo</h3>
                     <div class="font-mono text-8xl md:text-9xl tracking-wider text-glow font-bold animate-pulse">
                         {displayDays}
                     </div>
                 </>
             ) : (
                 <>
-                    <h3 class="text-xs uppercase tracking-[0.3em] text-red-500 mb-2 font-bold animate-pulse">PRÓXIMO OBJETIVO: VILLARREAL</h3>
-                    <div class="font-mono text-5xl md:text-7xl tracking-[0.2em] text-glow font-bold flex gap-4 items-center">
-                        <div class="flex flex-col items-center">
+                    <h3 class="text-[10px] uppercase tracking-[0.3em] text-red-500 mb-2 font-bold animate-pulse">PRÓXIMO OBJETIVO: VILLARREAL</h3>
+                    <div class="font-mono text-5xl md:text-7xl tracking-[0.1em] text-glow-sharp font-bold flex gap-2 md:gap-4 items-center">
+                        <div class="flex flex-col items-center leading-none">
                             <span>{String(matchTime.hours).padStart(2, '0')}</span>
-                            <span class="text-[10px] opacity-50 uppercase tracking-tighter">HRS</span>
+                            <span class="text-[8px] opacity-50 uppercase mt-1">HRS</span>
                         </div>
-                        <span class="pb-4">:</span>
-                        <div class="flex flex-col items-center">
+                        <span class="pb-4 md:pb-6">:</span>
+                        <div class="flex flex-col items-center leading-none">
                             <span>{String(matchTime.minutes).padStart(2, '0')}</span>
-                            <span class="text-[10px] opacity-50 uppercase tracking-tighter">MIN</span>
+                            <span class="text-[8px] opacity-50 uppercase mt-1">MIN</span>
                         </div>
-                        <span class="pb-4 opacity-50 text-3xl">:</span>
-                        <div class="flex flex-col items-center text-3xl opacity-70">
+                        <span class="pb-4 md:pb-6 opacity-50 text-2xl md:text-3xl">:</span>
+                        <div class="flex flex-col items-center text-2xl md:text-3xl opacity-70 leading-none">
                             <span>{String(matchTime.seconds).padStart(2, '0')}</span>
-                            <span class="text-[10px] opacity-50 uppercase tracking-tighter">SEC</span>
+                            <span class="text-[8px] opacity-50 uppercase mt-1">SEC</span>
                         </div>
                     </div>
                 </>

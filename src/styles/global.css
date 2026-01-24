@@ -78,6 +78,10 @@ body {
     text-shadow: 0 0 5px #00ee00, 0 0 10px #00ee00;
 }
 
+.text-glow-sharp {
+    text-shadow: 0 0 2px #00ee00, 0 0 4px rgba(0, 238, 0, 0.8);
+}
+
 .border-glow {
     box-shadow: 0 0 5px #00ee00;
 }
