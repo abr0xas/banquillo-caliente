@@ -7,9 +7,10 @@ interface Props {
   coachName: string;
   opponentName: string;
   statusLevel: number;
+  coachStartDate: string;
 }
 
-const { coachImage, opponentImage, coachName, opponentName, statusLevel } = Astro.props;
+const { coachImage, opponentImage, coachName, opponentName, statusLevel, coachStartDate } = Astro.props;
 
 // Frequency Bar Calculation (Visual only)
 const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
@@ -29,15 +30,24 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
         <!-- BLOCK 1: COACH (HERO) -->
         <div class="w-full aspect-[4/3] md:aspect-video relative border-y-4 border-codec-green bg-black group overflow-hidden">
              <!-- HUD BARS (Top Overlay) -->
-             <div class="absolute top-4 left-4 z-20 flex flex-col gap-2 opacity-95 w-1/2">
-                <!-- SALUD DE ENTRENADOR (Health Bar) -->
-                <div class="w-full bg-black/90 h-6 border-2 border-codec-green relative shadow-[0_0_10px_rgba(0,255,0,0.5)]">
-                    <span class="absolute inset-0 flex items-center justify-center text-[10px] tracking-widest font-bold z-10 text-codec-green uppercase drop-shadow-[0_0_2px_black]">Salud</span>
-                    <!-- Solid green health bar -->
-                    <div class="h-full bg-codec-green absolute left-0 top-0 transition-all duration-1000" style={`width: ${100 - statusLevel}%;`}></div>
+             <div class="absolute top-4 left-4 z-20 flex flex-col gap-1 opacity-100">
+                <!-- LIFE BAR (Metal Gear 1 Style) -->
+                <div class="flex items-center gap-2">
+                    <span class="text-white font-mono text-sm font-bold tracking-wider bg-black px-2 py-0.5 border border-white">LIFE</span>
+                    <div class="w-48 h-4 bg-black border border-white relative overflow-hidden">
+                        <!-- Animated fill with segmented effect -->
+                        <div class="h-full bg-green-500 absolute left-0 top-0 transition-all duration-1000 ease-out animate-pulse" style={`width: ${100 - statusLevel}%;`}>
+                            <!-- Segmented overlay for retro effect -->
+                            <div class="absolute inset-0 flex">
+                                {Array.from({ length: 20 }).map(() => (
+                                    <div class="flex-1 border-r border-black/20"></div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Secondary Status Bar -->
-                <div class="w-full bg-codec-dim h-1 border border-codec-green relative flex gap-0.5 opacity-60">
+                <!-- Secondary Status Bar (Optional) -->
+                <div class="w-full max-w-[13rem] bg-codec-dim h-1 border border-codec-green relative flex gap-0.5 opacity-40">
                     {Array.from({ length: 20 }).map(() => (
                         <div class="h-full bg-codec-green flex-1 opacity-50"></div>
                     ))}
@@ -69,7 +79,7 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
         <!-- BLOCK 2: TIMER (CENTER) -->
         <div class="w-full py-8 flex flex-col items-center justify-center relative bg-codec-dark border-x-2 border-codec-green/30">
              <div class="text-xs tracking-[0.4em] text-codec-green/60 mb-2 uppercase">Tiempo en el Banquillo</div>
-             <TenureTimer client:load startDate="2026-01-12T10:00:00Z" />
+             <TenureTimer client:load startDate={coachStartDate} />
              <!-- Frequency visual -->
              <div class="flex items-end gap-1 h-8 mt-4 opacity-50">
                 <div class="w-1 bg-codec-green animate-[bounce_1s_infinite] h-full"></div>

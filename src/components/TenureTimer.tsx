@@ -8,7 +8,13 @@ export default function TenureTimer({ startDate }: Props) {
     const [duration, setDuration] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
     useEffect(() => {
+        if (!startDate) {
+            console.error('No startDate provided to TenureTimer');
+            return;
+        }
+
         const start = new Date(startDate).getTime();
+        console.log('Start date:', startDate, 'Timestamp:', start);
 
         const updateTimer = () => {
             const now = new Date().getTime();
@@ -19,6 +25,7 @@ export default function TenureTimer({ startDate }: Props) {
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
+            console.log('Calculated days:', days);
             setDuration({ days, hours, minutes, seconds });
         };
 
@@ -28,30 +35,15 @@ export default function TenureTimer({ startDate }: Props) {
         return () => clearInterval(interval);
     }, [startDate]);
 
+
     return (
         <div class="flex flex-col items-center justify-center w-full h-full text-codec-green">
-            <div class="font-mono text-3xl md:text-4xl tracking-widest text-glow flex gap-1 items-baseline">
-                <span class="flex flex-col items-center">
-                    <span>{String(duration.days).padStart(3, '0')}</span>
-                    <span class="text-[10px] opacity-70">D</span>
-                </span>
-                <span class="animate-pulse">:</span>
-                <span class="flex flex-col items-center">
-                    <span>{String(duration.hours).padStart(2, '0')}</span>
-                    <span class="text-[10px] opacity-70">H</span>
-                </span>
-                <span class="animate-pulse">:</span>
-                <span class="flex flex-col items-center">
-                    <span>{String(duration.minutes).padStart(2, '0')}</span>
-                    <span class="text-[10px] opacity-70">M</span>
-                </span>
-                <span class="animate-pulse text-codec-dim">:</span>
-                <span class="flex flex-col items-center">
-                    <span class="text-rm-white">{String(duration.seconds).padStart(2, '0')}</span>
-                    <span class="text-[10px] opacity-70">S</span>
-                </span>
+            <h3 class="text-xs uppercase tracking-widest opacity-70 mb-2">Días Sobreviviendo</h3>
+            <div class="font-mono text-6xl md:text-7xl tracking-wider text-glow font-bold">
+                {duration.days}
             </div>
-            <div class="text-xs tracking-[0.5em] opacity-50 mt-1 uppercase">SISTEMA ACTIVO</div>
+            <div class="text-xs uppercase tracking-widest opacity-50 mt-1">días en el cargo</div>
         </div>
     );
+
 }
