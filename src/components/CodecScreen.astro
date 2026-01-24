@@ -1,5 +1,6 @@
 ---
 import TenureTimer from './TenureTimer';
+import AudioSystem from './AudioSystem';
 
 interface Props {
   coachImage: string;
@@ -23,7 +24,10 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
     
     <!-- TOP BAR (PTT) -->
     <div class="w-full flex justify-between items-end border-b-2 border-codec-green pb-1 mb-4 opacity-80 px-2">
-       <span class="text-sm md:text-xl">CALL ING...</span>
+       <div class="flex flex-col gap-1">
+          <span class="text-sm md:text-xl">CALL ING...</span>
+          <AudioSystem client:load />
+       </div>
        <span class="text-2xl md:text-4xl font-bold tracking-widest text-glow">FREQ {frequency}</span>
     </div>
 
