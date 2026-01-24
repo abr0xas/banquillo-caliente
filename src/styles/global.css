@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+    --color-codec-green: #00ee00;
+    --color-codec-dark: #0c0c0c;
+    --color-codec-dim: #005500;
+
+    --font-mono: 'VT323', monospace;
+}
+
+/* Base Styles */
+body {
+    background-color: #0c0c0c;
+    color: #00ee00;
+    font-family: 'VT323', monospace;
+}
+
+/* CRT Scanline Effect */
+.scanlines {
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.2) 50%,
+            rgba(0, 0, 0, 0.2));
+    background-size: 100% 4px;
+    animation: scanline 10s linear infinite;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    opacity: 0.6;
+}
+
+/* CRT Flicker */
+@keyframes flicker {
+    0% {
+        opacity: 0.97;
+    }
+
+    5% {
+        opacity: 0.95;
+    }
+
+    10% {
+        opacity: 0.9;
+    }
+
+    15% {
+        opacity: 0.95;
+    }
+
+    20% {
+        opacity: 0.99;
+    }
+
+    50% {
+        opacity: 0.95;
+    }
+
+    80% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0.97;
+    }
+}
+
+.crt-flicker {
+    animation: flicker 0.15s infinite;
+}
+
+/* Text Glow */
+.text-glow {
+    text-shadow: 0 0 5px #00ee00, 0 0 10px #00ee00;
+}
+
+.border-glow {
+    box-shadow: 0 0 5px #00ee00;
+}

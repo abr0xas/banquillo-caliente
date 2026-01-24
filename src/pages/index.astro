@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CodecScreen from '../components/CodecScreen.astro';
+import statusData from '../data/status.json';
+
+const { coach, opponent, status, recentResults } = statusData;
+
+// Icon mapping
+const getResultIcon = (result: string) => {
+    if (result === 'W') return '✅'; // Win
+    if (result === 'L') return '💀'; // Loss
+    return '⚠️'; // Draw
+};
+---
+
+<Layout title="CODEC 140.85: ANCELOTTI STATUS">
+	<main class="min-h-screen flex flex-col items-center justify-center p-4">
+        
+        <CodecScreen 
+            coachImage={coach.image}
+            coachName="SNAKE (ANCELOTTI)"
+            opponentImage={opponent.image}
+            opponentName={`RIVAL: ${opponent.name}`}
+            statusLevel={status.level}
+        >
+            <div slot="subtitles" class="text-center">
+                <p class="mb-2 text-codec-green text-shadow">{status.description}</p>
+                <div class="flex justify-center gap-4 text-2xl mt-2">
+                    {recentResults.map((match) => (
+                        <div class="flex flex-col items-center group cursor-help relative">
+                            <span class="text-3xl filter drop-shadow-[0_0_5px_rgba(0,255,0,0.5)] transition-transform group-hover:scale-125">
+                                {getResultIcon(match.result)}
+                            </span>
+                             <span class="text-[10px] opacity-0 group-hover:opacity-100 absolute -bottom-4 w-20 text-center bg-codec-dark border border-codec-green z-50">
+                                {match.opponent} {match.score}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </CodecScreen>
+
+	</main>
+</Layout>
+
+<style>
+    .text-shadow {
+        text-shadow: 2px 2px 0px #000;
+    }
+</style>
