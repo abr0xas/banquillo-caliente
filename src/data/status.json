@@ -7,7 +7,33 @@
   "opponent": {
     "name": "Villarreal CF",
     "image": "/assets/villarreal_codec.png",
-    "date": "2026-01-24T21:00:00Z"
+    "date": "2026-01-24T21:00:00Z",
+    "recentResults": [
+      {
+        "opponent": "Ajax",
+        "result": "L",
+        "score": "1-2",
+        "competition": "UCL"
+      },
+      {
+        "opponent": "Betis",
+        "result": "L",
+        "score": "0-2",
+        "competition": "Liga"
+      },
+      {
+        "opponent": "Alavés",
+        "result": "W",
+        "score": "3-1",
+        "competition": "Liga"
+      },
+      {
+        "opponent": "Elche",
+        "result": "W",
+        "score": "3-1",
+        "competition": "Liga"
+      }
+    ]
   },
   "status": {
     "level": 40,
@@ -32,12 +58,6 @@
       "result": "L",
       "score": "3-2",
       "competition": "Copa"
-    },
-    {
-      "opponent": "Barça",
-      "result": "L",
-      "score": "3-2",
-      "competition": "Supercopa"
     }
   ]
 }

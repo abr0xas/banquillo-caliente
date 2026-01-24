@@ -30,13 +30,26 @@ export default function TenureTimer({ startDate }: Props) {
 
     return (
         <div class="flex flex-col items-center justify-center w-full h-full text-codec-green">
-            <h3 class="text-xs uppercase tracking-widest opacity-70 mb-1">Tiempo en el Banquillo</h3>
-            <div class="font-mono text-4xl tracking-widest text-glow flex gap-1 items-baseline">
-                <span>{String(duration.days).padStart(4, '0')}</span>
-                <span class="text-sm">D</span>
+            <div class="font-mono text-3xl md:text-4xl tracking-widest text-glow flex gap-1 items-baseline">
+                <span class="flex flex-col items-center">
+                    <span>{String(duration.days).padStart(3, '0')}</span>
+                    <span class="text-[10px] opacity-70">D</span>
+                </span>
                 <span class="animate-pulse">:</span>
-                <span>{String(duration.hours).padStart(2, '0')}</span>
-                <span class="text-sm">H</span>
+                <span class="flex flex-col items-center">
+                    <span>{String(duration.hours).padStart(2, '0')}</span>
+                    <span class="text-[10px] opacity-70">H</span>
+                </span>
+                <span class="animate-pulse">:</span>
+                <span class="flex flex-col items-center">
+                    <span>{String(duration.minutes).padStart(2, '0')}</span>
+                    <span class="text-[10px] opacity-70">M</span>
+                </span>
+                <span class="animate-pulse text-codec-dim">:</span>
+                <span class="flex flex-col items-center">
+                    <span class="text-rm-white">{String(duration.seconds).padStart(2, '0')}</span>
+                    <span class="text-[10px] opacity-70">S</span>
+                </span>
             </div>
             <div class="text-xs tracking-[0.5em] opacity-50 mt-1 uppercase">SISTEMA ACTIVO</div>
         </div>
