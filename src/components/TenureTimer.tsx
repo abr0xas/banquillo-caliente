@@ -105,8 +105,8 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
 
             {phase === 'SURVIVAL' ? (
                 <div class="flex flex-col items-center justify-center w-full min-h-[120px]">
-                    <h3 class="text-[10px] uppercase tracking-[0.3em] opacity-70 mb-2 font-bold">Días Sobreviviendo</h3>
-                    <div class="font-mono text-8xl md:text-9xl tracking-wider text-glow font-bold animate-pulse">
+                    <h3 class="text-[8px] sm:text-[10px] uppercase tracking-[0.3em] opacity-70 mb-1 sm:mb-2 font-bold">Días Sobreviviendo</h3>
+                    <div class="font-mono text-7xl sm:text-8xl md:text-9xl tracking-wider text-glow font-bold animate-pulse leading-none">
                         {displayDays}
                     </div>
                 </div>
@@ -132,17 +132,17 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
                             <div class="font-mono text-3xl md:text-7xl tracking-tighter text-glow-sharp font-bold flex gap-1 items-baseline">
                                 <div class="flex flex-col items-center leading-none">
                                     <span>{String(matchTime.hours).padStart(2, '0')}</span>
-                                    <span class="text-[5px] md:text-[8px] opacity-40 uppercase">HRS</span>
+                                    <span class="text-[5px] sm:text-[8px] opacity-40 uppercase">HRS</span>
                                 </div>
-                                <span class="opacity-40 animate-pulse text-xl md:text-5xl">:</span>
+                                <span class="opacity-40 animate-pulse text-lg sm:text-xl md:text-5xl">:</span>
                                 <div class="flex flex-col items-center leading-none">
                                     <span>{String(matchTime.minutes).padStart(2, '0')}</span>
-                                    <span class="text-[5px] md:text-[8px] opacity-40 uppercase">MIN</span>
+                                    <span class="text-[5px] sm:text-[8px] opacity-40 uppercase">MIN</span>
                                 </div>
-                                <span class="opacity-20 text-lg md:text-4xl">:</span>
+                                <span class="opacity-20 text-md sm:text-lg md:text-4xl">:</span>
                                 <div class="flex flex-col items-center opacity-70 leading-none">
-                                    <span class="text-xl md:text-5xl">{String(matchTime.seconds).padStart(2, '0')}</span>
-                                    <span class="text-[5px] md:text-[8px] opacity-40 uppercase">SEC</span>
+                                    <span class="text-lg sm:text-xl md:text-5xl">{String(matchTime.seconds).padStart(2, '0')}</span>
+                                    <span class="text-[5px] sm:text-[8px] opacity-40 uppercase">SEC</span>
                                 </div>
                             </div>
                         </div>

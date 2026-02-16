@@ -9,7 +9,7 @@ interface Props {
 
 const { 
     title, 
-    description = "Medidor de crisis del entrenador del Real Madrid. ¿Sigue Ancelotti? Vota y comparte.",
+    description = "👑 REALTRONO — El trono más peligroso del fútbol. ¿Cuánto durará el míster?",
     image = "/og-default.jpg"
 } = Astro.props;
 ---
@@ -19,7 +19,7 @@ const {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
         
@@ -40,10 +40,56 @@ const {
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 	</head>
 	<body class="bg-codec-dark text-codec-green min-h-screen font-mono">
         <div class="scanlines"></div>
+        
+        <!-- HEADER CON MARCA REALTRONO -->
+        <header class="sticky top-0 z-50 w-full border-b-2 border-codec-green/60 bg-codec-dark/95 backdrop-blur-sm">
+            <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+                <!-- LOGO + MARCA -->
+                <a href="/" class="flex items-center gap-3 group">
+                    <span class="text-2xl group-hover:animate-pulse">👑</span>
+                    <div class="flex flex-col">
+                        <span class="font-['Press_Start_2P'] text-[10px] sm:text-xs text-codec-green tracking-wider text-glow">
+                            REALTRONO
+                        </span>
+                        <span class="text-[8px] text-codec-green/40 tracking-widest hidden sm:block">
+                            EL TRONO MÁS PELIGROSO
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- CODEC ID -->
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex flex-col items-end">
+                        <span class="text-[8px] text-codec-green/40 tracking-widest">CODEC</span>
+                        <span class="text-sm font-bold text-glow tabular-nums">v2.0</span>
+                    </div>
+                    <div class="w-2 h-2 bg-codec-green rounded-full animate-pulse shadow-[0_0_10px_var(--color-codec-green)]"></div>
+                </div>
+            </div>
+        </header>
+
 		<slot />
+        
+        <!-- FOOTER -->
+        <footer class="w-full border-t border-codec-green/20 mt-12 py-6 px-4">
+            <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg">👑</span>
+                    <span class="font-['Press_Start_2P'] text-[8px] text-codec-green/60">REALTRONO</span>
+                </div>
+                <p class="text-[10px] text-codec-green/40 text-center">
+                    "El banquillo del Real Madrid es el más difícil del mundo"
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-codec-green/40 hover:text-codec-green text-xs transition-colors">𝕏</a>
+                    <a href="#" class="text-codec-green/40 hover:text-codec-green text-xs transition-colors">IG</a>
+                    <a href="#" class="text-codec-green/40 hover:text-codec-green text-xs transition-colors">YT</a>
+                </div>
+            </div>
+        </footer>
 	</body>
 </html>

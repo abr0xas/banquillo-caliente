@@ -1,0 +1,138 @@
+---
+interface Props {
+    currentLevel: number; // 1-5 donde 1=Intocable, 5=Destituido
+    statusName: string;
+}
+
+const { currentLevel, statusName } = Astro.props;
+
+const levels = [
+    { id: 1, name: 'INTOCABLE', color: 'green', icon: '🛡️', description: 'Racha de victorias, títulos recientes' },
+    { id: 2, name: 'TRANQUILO', color: 'yellow', icon: '😎', description: 'Resultados aceptables' },
+    { id: 3, name: 'MURMULLOS', color: 'orange', icon: '👀', description: 'Empiezan las críticas en prensa' },
+    { id: 4, name: 'PELIGRO', color: 'red', icon: '⚠️', description: 'Malos resultados, rumores fuertes' },
+    { id: 5, name: 'GAME OVER', color: 'black', icon: '💀', description: 'Destituido / Dimisión' },
+];
+
+const getColorClass = (color: string, isActive: boolean) => {
+    if (!isActive) return 'bg-codec-dark border-codec-green/20 opacity-30';
+    
+    switch(color) {
+        case 'green': return 'bg-green-500/20 border-green-500 shadow-[0_0_15px_rgba(34,197,94,0.4)]';
+        case 'yellow': return 'bg-yellow-500/20 border-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.4)]';
+        case 'orange': return 'bg-orange-500/20 border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.4)]';
+        case 'red': return 'bg-red-500/20 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)] animate-pulse';
+        case 'black': return 'bg-gray-900 border-gray-500 shadow-[0_0_15px_rgba(0,0,0,0.8)]';
+        default: return 'bg-codec-dark border-codec-green/20';
+    }
+};
+
+const getTextColor = (color: string, isActive: boolean) => {
+    if (!isActive) return 'text-codec-green/30';
+    
+    switch(color) {
+        case 'green': return 'text-green-400';
+        case 'yellow': return 'text-yellow-400';
+        case 'orange': return 'text-orange-400';
+        case 'red': return 'text-red-400';
+        case 'black': return 'text-gray-400';
+        default: return 'text-codec-green';
+    }
+};
+---
+
+<div class="w-full max-w-md mx-auto">
+    <!-- HEADER -->
+    <div class="flex items-center justify-between mb-4 px-2">
+        <div class="flex items-center gap-2">
+            <span class="text-[10px] tracking-[0.3em] text-codec-green/60 uppercase">Status Level</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-[10px] text-codec-green/40 font-mono">LVL</span>
+            <span class="font-['Press_Start_2P'] text-lg text-codec-green text-glow">{currentLevel}</span>
+            <span class="text-[10px] text-codec-green/40 font-mono">/5</span>
+        </div>
+    </div>
+
+    <!-- THERMOMETER VERTICAL -->
+    <div class="relative border-2 border-codec-green/40 bg-codec-dark/80 p-3 sm:p-4">
+        <!-- Corner decorations -->
+        <div class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-codec-green"></div>
+        <div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-codec-green"></div>
+        <div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-codec-green"></div>
+        <div class="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-codec-green"></div>
+        
+        <div class="flex flex-col gap-2">
+            {levels.map((level) => {
+                const isActive = level.id === currentLevel;
+                const isPast = level.id < currentLevel;
+                
+                return (
+                    <div 
+                        class={`
+                            relative flex items-center gap-3 p-2 sm:p-3 border-2 transition-all duration-300
+                            ${getColorClass(level.color, isActive)}
+                            ${isPast ? 'opacity-40' : ''}
+                        `}
+                    >
+                        <!-- Level indicator -->
+                        <div class={`
+                            w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl
+                            ${isActive ? 'animate-bounce' : ''}
+                        `}>
+                            {level.icon}
+                        </div>
+                        
+                        <!-- Level info -->
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2">
+                                <span class={`
+                                    font-['Press_Start_2P'] text-[8px] sm:text-[10px] tracking-wide
+                                    ${getTextColor(level.color, isActive)}
+                                `}>
+                                    {level.name}
+                                </span>
+                                {isActive && (
+                                    <span class="text-[8px] px-2 py-0.5 bg-codec-green text-black font-bold animate-pulse">
+                                        ACTUAL
+                                    </span>
+                                )}
+                            </div>
+                            <p class={`
+                                text-[9px] sm:text-[10px] mt-1 leading-tight
+                                ${isActive ? 'text-codec-green/80' : 'text-codec-green/30'}
+                            `}>
+                                {level.description}
+                            </p>
+                        </div>
+                        
+                        <!-- Arrow indicator for active -->
+                        {isActive && (
+                            <div class="absolute -left-4 top-1/2 -translate-y-1/2 text-codec-green animate-pulse">
+                                ▶
+                            </div>
+                        )}
+                    </div>
+                );
+            })}
+        </div>
+    </div>
+    
+    <!-- CURRENT STATUS HIGHLIGHT -->
+    <div class="mt-4 text-center">
+        <span class="text-[10px] text-codec-green/40 tracking-widest">ESTADO ACTUAL</span>
+        <div class={`
+            font-['Press_Start_2P'] text-sm sm:text-base mt-1 tracking-wide
+            ${getTextColor(levels[currentLevel - 1]?.color || 'green', true)}
+        `}>
+            {levels[currentLevel - 1]?.icon} {statusName}
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 10px currentColor; }
+        50% { box-shadow: 0 0 25px currentColor, 0 0 40px currentColor; }
+    }
+</style>

@@ -1,6 +1,7 @@
 {
   "coach": {
     "name": "Álvaro Arbeloa",
+    "nickname": "El Espartano",
     "startDate": "2026-01-12T10:00:00Z",
     "image": "/assets/arbeloa_codec.png"
   },
@@ -9,55 +10,37 @@
     "image": "/assets/villarreal_codec.png",
     "date": "2026-01-24T21:00:00Z",
     "recentResults": [
-      {
-        "opponent": "Ajax",
-        "result": "L",
-        "score": "1-2",
-        "competition": "UCL"
-      },
-      {
-        "opponent": "Betis",
-        "result": "L",
-        "score": "0-2",
-        "competition": "Liga"
-      },
-      {
-        "opponent": "Alavés",
-        "result": "W",
-        "score": "3-1",
-        "competition": "Liga"
-      },
-      {
-        "opponent": "Elche",
-        "result": "W",
-        "score": "3-1",
-        "competition": "Liga"
-      }
+      { "opponent": "Ajax", "result": "L", "score": "1-2", "competition": "UCL" },
+      { "opponent": "Betis", "result": "L", "score": "0-2", "competition": "Liga" },
+      { "opponent": "Alavés", "result": "W", "score": "3-1", "competition": "Liga" },
+      { "opponent": "Elche", "result": "W", "score": "3-1", "competition": "Liga" }
     ]
   },
   "status": {
-    "level": 40,
-    "description": "ESPARTANO AL MANDO",
-    "subtext": "Tras el debut fallido en Copa, el 'Espartano' endereza el rumbo con goleadas. La grada respira... por ahora."
+    "level": 4,
+    "levelName": "PELIGRO",
+    "lifePercent": 25,
+    "description": "SITUACIÓN CRÍTICA",
+    "subtext": "Tras la eliminación en Copa ante el Albacete, el vestuario tiembla. Florentino evalúa opciones."
   },
+  "statusLevels": [
+    { "id": 1, "name": "INTOCABLE", "color": "green", "minLife": 80, "maxLife": 100 },
+    { "id": 2, "name": "TRANQUILO", "color": "yellow", "minLife": 60, "maxLife": 79 },
+    { "id": 3, "name": "MURMULLOS", "color": "orange", "minLife": 40, "maxLife": 59 },
+    { "id": 4, "name": "PELIGRO", "color": "red", "minLife": 20, "maxLife": 39 },
+    { "id": 5, "name": "GAME OVER", "color": "black", "minLife": 0, "maxLife": 19 }
+  ],
   "recentResults": [
-    {
-      "opponent": "Monaco",
-      "result": "W",
-      "score": "6-1",
-      "competition": "UCL"
-    },
-    {
-      "opponent": "Levante",
-      "result": "W",
-      "score": "2-0",
-      "competition": "Liga"
-    },
-    {
-      "opponent": "Albacete",
-      "result": "L",
-      "score": "3-2",
-      "competition": "Copa"
-    }
+    { "opponent": "Monaco", "result": "W", "score": "6-1", "competition": "UCL" },
+    { "opponent": "Levante", "result": "W", "score": "2-0", "competition": "Liga" },
+    { "opponent": "Albacete", "result": "L", "score": "3-2", "competition": "Copa" }
+  ],
+  "fallenCoaches": [
+    { "name": "LOPETEGUI", "days": 139, "year": "2018", "reason": "5-1 vs Barça" },
+    { "name": "SOLARI", "days": 179, "year": "2019", "reason": "Eliminado en Copa y UCL" },
+    { "name": "BENÍTEZ", "days": 225, "year": "2016", "reason": "Mal juego, vestuario roto" },
+    { "name": "LUXEMBURGO", "days": 256, "year": "2005", "reason": "Resultados irregulares" },
+    { "name": "CAPELLO", "days": 364, "year": "2007", "reason": "Conflictos internos" },
+    { "name": "PELLEGRINI", "days": 365, "year": "2010", "reason": "Sin títulos, eliminado en UCL" }
   ]
 }

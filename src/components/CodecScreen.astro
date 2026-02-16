@@ -20,95 +20,119 @@ const { coachImage, opponentImage, coachName, opponentName, statusLevel, coachSt
 const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
 ---
 
-<div class="w-full max-w-4xl mx-auto p-4 flex flex-col items-center min-h-screen">
+<div class="w-full max-w-4xl mx-auto p-2 sm:p-4 flex flex-col items-center min-h-screen">
     
     <!-- TOP BAR (PTT) -->
-    <div class="w-full flex justify-between items-end border-b-2 border-codec-green pb-1 mb-4 opacity-80 px-2">
+    <div class="w-full flex justify-between items-end border-b-2 border-codec-green/40 pb-2 mb-6 opacity-90 px-2 relative">
        <div class="flex flex-col gap-1">
-          <span class="text-sm md:text-xl">CALL ING...</span>
+          <div class="flex items-center gap-2">
+             <div class="w-2 h-2 bg-codec-green animate-pulse"></div>
+             <span class="text-xs md:text-sm tracking-[0.3em] font-bold">PTT CALL...</span>
+          </div>
           <AudioSystem client:load />
        </div>
-       <span class="text-2xl md:text-4xl font-bold tracking-widest text-glow">FREQ {frequency}</span>
+       <div class="flex flex-col items-end shrink-0">
+          <span class="text-[8px] sm:text-[10px] md:text-xs tracking-[0.2em] text-codec-green/60 mb-0.5 sm:mb-1">TUNER</span>
+          <span class="text-xl sm:text-2xl md:text-5xl font-bold tracking-widest text-glow tabular-nums">{frequency}</span>
+       </div>
+       
+       <!-- Frequency Visualizer -->
+       <div class="absolute -bottom-[2px] left-0 w-full flex items-end gap-0.5 h-1 overflow-hidden">
+          {Array.from({ length: 40 }).map((_, i) => (
+             <div 
+                class="flex-1 bg-codec-green/30 animate-frequency" 
+                style={`height: ${Math.random() * 100}%; animation-delay: ${i * 0.05}s;`}
+             ></div>
+          ))}
+       </div>
     </div>
 
     <!-- MAIN VERTICAL STACK -->
-    <div class="w-full flex flex-col gap-4">
+    <div class="w-full flex flex-col gap-6">
         
         <!-- BLOCK 1: COACH (HERO) -->
-        <div class="w-full aspect-video md:aspect-video relative border-y-4 border-codec-green bg-black group overflow-hidden">
+        <div class="w-full aspect-video relative border-y-2 border-codec-green bg-black group overflow-hidden shadow-2xl">
              <!-- HUD BARS (Top Overlay) -->
-             <div class="absolute top-4 left-4 z-20 flex flex-col gap-1 opacity-100">
+             <div class="absolute top-4 left-4 z-20 flex flex-col gap-2">
                 <!-- LIFE BAR (Metal Gear 1 Style) -->
-                <div class="flex items-center gap-2">
-                    <span class="text-white font-mono text-sm font-bold tracking-wider bg-black px-2 py-0.5 border border-white">LIFE</span>
-                    <div class="w-48 h-4 bg-black border border-white relative overflow-hidden">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <span class="text-black font-mono text-[8px] sm:text-xs font-bold tracking-wider bg-codec-green px-1.5 sm:px-2 py-0.5 border border-codec-green">LIFE</span>
+                    <div class="w-24 sm:w-64 h-2 sm:h-3 bg-black border border-codec-green/40 relative overflow-hidden">
                         <!-- Animated fill with segmented effect -->
-                        <div class="h-full bg-green-500 absolute left-0 top-0 transition-all duration-1000 ease-out animate-pulse" style={`width: ${100 - statusLevel}%;`}>
+                        <div class="h-full bg-codec-green absolute left-0 top-0 transition-all duration-1000 ease-out" style={`width: ${100 - statusLevel}%; shadow: 0 0 10px var(--color-codec-green);`}>
                             <!-- Segmented overlay for retro effect -->
                             <div class="absolute inset-0 flex">
-                                {Array.from({ length: 20 }).map(() => (
-                                    <div class="flex-1 border-r border-black/20"></div>
+                                {Array.from({ length: 32 }).map(() => (
+                                    <div class="flex-1 border-r border-black/30"></div>
                                 ))}
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Secondary Status Bar (Optional) -->
-                <div class="w-full max-w-[13rem] bg-codec-dim h-1 border border-codec-green relative flex gap-0.5 opacity-40">
-                    {Array.from({ length: 20 }).map(() => (
-                        <div class="h-full bg-codec-green flex-1 opacity-50"></div>
-                    ))}
+                
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <span class="text-black font-mono text-[8px] sm:text-xs font-bold tracking-wider bg-codec-green/60 px-1.5 sm:px-2 py-0.5 border border-codec-green/60 uppercase">O2</span>
+                    <div class="w-20 sm:w-48 h-1.5 sm:h-2 bg-black border border-codec-green/20 relative flex gap-0.5">
+                        {Array.from({ length: 15 }).map((_, i) => (
+                            <div class={`h-full bg-codec-green/40 flex-1 ${i < 10 ? 'opacity-100' : 'opacity-20'}`}></div>
+                        ))}
+                    </div>
                 </div>
              </div>
 
              <!-- IMAGE -->
-             <img 
-                src={coachImage} 
-                class="w-full h-full object-cover grayscale transition-all duration-500"
-                style="filter: grayscale(100%) sepia(100%) hue-rotate(80deg) saturate(300%) contrast(1.2);"
-            />
+             <div class="w-full h-full relative">
+                <img 
+                    src={coachImage} 
+                    class="w-full h-full object-cover transition-all duration-700 brightness-110"
+                    style="filter: grayscale(100%) sepia(20%) brightness(0.9) contrast(1.2);"
+                />
+                <!-- Green tint overlay -->
+                <div class="absolute inset-0 bg-codec-green/10 mix-blend-overlay pointer-events-none"></div>
+             </div>
             
             <!-- Scanlines -->
-            <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none z-10"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] pointer-events-none z-10 opacity-50"></div>
 
             <!-- NAME TAG + RESULTS (Bottom Overlay) -->
             <div class="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-end">
-                <div class="bg-codec-dark/90 px-3 py-1 border border-codec-green text-sm md:text-lg font-bold tracking-wider">
-                    EL ESPARTANO (ARBELOA)
+                <div class="bg-codec-bg/90 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-codec-green text-xs sm:text-sm md:text-xl font-bold tracking-[0.2em] text-glow uppercase max-w-[70%] truncate">
+                    {coachName}
                 </div>
                 <!-- RECENT RESULTS (Moved Inside) -->
-                <div class="flex gap-2 bg-codec-dark/90 px-2 py-1 border border-codec-green">
+                <div class="hidden sm:flex flex-col gap-1 bg-codec-bg/80 px-3 py-2 border border-codec-green/40 backdrop-blur-sm">
+                     <span class="text-[8px] tracking-[0.2em] text-codec-green/60 mb-1">LOGS</span>
                      <slot name="results-mini" />
                 </div>
             </div>
         </div>
 
         <!-- BLOCK 2: TIMER (CENTER) -->
-            <div class="w-full py-8 flex flex-col items-center justify-center relative bg-codec-dark border-x-2 border-codec-green/30">
+        <div class="w-full py-4 flex flex-col items-center justify-center relative">
+             <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-codec-green/40 to-transparent mb-4"></div>
              <TenureTimer client:load startDate={coachStartDate} matchDate={matchDate} homeTeam={homeTeam} awayTeam={awayTeam} />
-             <!-- Frequency visual -->
-
+             <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-codec-green/40 to-transparent mt-4"></div>
         </div>
 
         <!-- BLOCK 3: RIVAL (BOTTOM) -->
-        <div class="w-full aspect-video md:aspect-video relative border-2 border-codec-green bg-black overflow-hidden">
+        <div class="w-full aspect-video relative border-2 border-codec-green/20 bg-black overflow-hidden group shadow-lg">
              <!-- RIVAL IMAGE (Full Cover) -->
              <img 
                 src={opponentImage} 
-                class="w-full h-full object-cover grayscale"
-                style="filter: grayscale(100%) sepia(100%) hue-rotate(80deg) saturate(300%) contrast(1.2);"
+                class="w-full h-full object-cover grayscale brightness-75 group-hover:brightness-90 transition-all duration-500"
+                style="filter: grayscale(100%) sepia(100%) hue-rotate(80deg) saturate(150%) contrast(1.1);"
              />
              
              <!-- Scanlines -->
-             <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none z-10"></div>
+             <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.2)_50%)] bg-[length:100%_2px] pointer-events-none z-10"></div>
 
              <!-- NAME TAG + RESULTS (Bottom Overlay) -->
              <div class="absolute bottom-2 left-2 right-2 md:bottom-4 md:left-4 md:right-4 z-20 flex justify-between items-end">
-                 <div class="bg-codec-dark/90 px-2 py-0.5 border border-codec-green text-[10px] md:text-lg font-bold tracking-wider">
-                     RIVAL: {opponentName}
+                 <div class="bg-codec-bg/90 px-3 py-1 border border-codec-green/60 text-xs md:text-lg font-bold tracking-widest text-codec-green/80">
+                     TARGET: {opponentName}
                  </div>
                  <!-- RIVAL RESULTS (Overlaid) -->
-                 <div class="flex flex-col gap-0.5 bg-codec-dark/90 px-1 py-0.5 border border-codec-green">
+                 <div class="flex flex-col gap-1 bg-codec-bg/80 px-2 py-1 border border-codec-green/20 backdrop-blur-sm">
                      <slot name="rival-results" />
                  </div>
              </div>
@@ -117,8 +141,29 @@ const frequency = (140.00 + (statusLevel / 100)).toFixed(2);
     </div>
 
     <!-- SUBTITLES (Context) -->
-    <div class="w-full mt-4 min-h-[80px] border-t border-codec-green bg-black/60 p-4 font-mono text-sm leading-relaxed text-center opacity-80">
+    <div class="w-full mt-8 border-t-2 border-codec-green/40 bg-codec-bg/40 p-6 font-mono text-sm sm:text-base leading-relaxed text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-[1px] bg-codec-green/20 animate-scanline-fast"></div>
         <slot name="subtitles" />
     </div>
 
 </div>
+
+<style>
+    @keyframes frequency {
+        0%, 100% { height: 20%; opacity: 0.3; }
+        50% { height: 100%; opacity: 0.8; }
+    }
+    .animate-frequency {
+        animation: frequency 0.5s ease-in-out infinite;
+    }
+    
+    @keyframes scanline-fast {
+        0% { transform: translateY(0); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(80px); opacity: 0; }
+    }
+    .animate-scanline-fast {
+        animation: scanline-fast 4s linear infinite;
+    }
+</style>
+

@@ -2,86 +2,195 @@
 
 @theme {
     --color-codec-green: #00ee00;
+    --color-codec-green-dim: #005500;
     --color-codec-dark: #0c0c0c;
-    --color-codec-dim: #005500;
+    --color-codec-bg: #101810;
+    --color-codec-border: rgba(0, 238, 0, 0.3);
 
     --font-mono: 'VT323', monospace;
+
+    --shadow-codec: 0 0 10px rgba(0, 238, 0, 0.4);
 }
 
 /* Base Styles */
 body {
-    background-color: #0c0c0c;
-    color: #00ee00;
-    font-family: 'VT323', monospace;
+    background-color: var(--color-codec-dark);
+    color: var(--color-codec-green);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
 }
 
 /* CRT Scanline Effect */
 .scanlines {
-    background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0) 50%,
-            rgba(0, 0, 0, 0.2) 50%,
-            rgba(0, 0, 0, 0.2));
-    background-size: 100% 4px;
-    animation: scanline 10s linear infinite;
-    pointer-events: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 50;
-    opacity: 0.6;
+    background: linear-gradient(transparent 50%,
+            rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 3px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.scanlines::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 101;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+/* Moving Scanline Overlay */
+.scanline-moving {
+    width: 100%;
+    height: 100px;
+    z-index: 102;
+    background: linear-gradient(0deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 238, 0, 0.1) 50%,
+            rgba(0, 0, 0, 0) 100%);
+    opacity: 0.1;
+    position: fixed;
+    bottom: 100%;
+    pointer-events: none;
+    animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+    0% {
+        bottom: 100%;
+    }
+
+    100% {
+        bottom: -100px;
+    }
 }
 
 /* CRT Flicker */
 @keyframes flicker {
     0% {
-        opacity: 0.97;
+        opacity: 0.27861;
     }
 
     5% {
-        opacity: 0.95;
+        opacity: 0.34769;
     }
 
     10% {
-        opacity: 0.9;
+        opacity: 0.23604;
     }
 
     15% {
-        opacity: 0.95;
+        opacity: 0.90626;
     }
 
     20% {
-        opacity: 0.99;
+        opacity: 0.18128;
+    }
+
+    25% {
+        opacity: 0.83891;
+    }
+
+    30% {
+        opacity: 0.65583;
+    }
+
+    35% {
+        opacity: 0.57807;
+    }
+
+    40% {
+        opacity: 0.26559;
+    }
+
+    45% {
+        opacity: 0.84693;
     }
 
     50% {
-        opacity: 0.95;
+        opacity: 0.96019;
+    }
+
+    55% {
+        opacity: 0.08594;
+    }
+
+    60% {
+        opacity: 0.20313;
+    }
+
+    65% {
+        opacity: 0.71988;
+    }
+
+    70% {
+        opacity: 0.53455;
+    }
+
+    75% {
+        opacity: 0.37288;
     }
 
     80% {
-        opacity: 0.9;
+        opacity: 0.71428;
+    }
+
+    85% {
+        opacity: 0.70419;
+    }
+
+    90% {
+        opacity: 0.7003;
+    }
+
+    95% {
+        opacity: 0.36108;
     }
 
     100% {
-        opacity: 0.97;
+        opacity: 0.24387;
     }
-}
-
-.crt-flicker {
-    animation: flicker 0.15s infinite;
 }
 
 /* Text Glow */
 .text-glow {
-    text-shadow: 0 0 5px #00ee00, 0 0 10px #00ee00;
+    text-shadow: 0 0 5px var(--color-codec-green), 0 0 10px var(--color-codec-green);
 }
 
 .text-glow-sharp {
-    text-shadow: 0 0 2px #00ee00, 0 0 4px rgba(0, 238, 0, 0.8);
+    text-shadow: 0 0 2px var(--color-codec-green), 0 0 4px rgba(0, 238, 0, 0.8);
 }
 
 .border-glow {
-    box-shadow: 0 0 5px #00ee00;
+    box-shadow: 0 0 10px var(--color-codec-green-dim);
+    border-color: var(--color-codec-green);
+}
+
+.text-gtavi-glow {
+    color: white;
+    text-shadow: 1.1px 0px 0px var(--color-gtavi-pink);
+}
+
+.codec-panel {
+    background: rgba(16, 24, 16, 0.8);
+    border: 1px solid var(--color-codec-green);
+    box-shadow: inset 0 0 15px rgba(0, 238, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.5);
 }
