@@ -17,14 +17,38 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
     const [phase, setPhase] = useState<Phase>('SURVIVAL');
     const [isTransitioning, setIsTransitioning] = useState(false);
 
-    // Initial Survival Logic (Total Days)
+    // Initial Survival Logic (Total Days) — timezone-safe, using UTC dates
     useEffect(() => {
         if (!startDate) return;
-        const start = new Date(startDate).getTime();
-        const now = new Date().getTime();
-        const diff = now - start;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        setDuration({ days });
+
+        const calcDays = () => {
+            const start = new Date(startDate);
+            const now = new Date();
+
+            // Compare UTC calendar dates to avoid timezone drift
+            const startUTC = Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate());
+            const nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+
+            return Math.floor((nowUTC - startUTC) / (1000 * 60 * 60 * 24));
+        };
+
+        setDuration({ days: calcDays() });
+
+        // Recalculate at midnight UTC
+        const now = new Date();
+        const nextMidnightUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
+        const msToMidnight = nextMidnightUTC.getTime() - now.getTime();
+
+        const timeout = setTimeout(() => {
+            setDuration({ days: calcDays() });
+            // Then update every 24h
+            const interval = setInterval(() => {
+                setDuration({ days: calcDays() });
+            }, 24 * 60 * 60 * 1000);
+            return () => clearInterval(interval);
+        }, msToMidnight);
+
+        return () => clearTimeout(timeout);
     }, [startDate]);
 
     // Count-up animation for Survival phase
