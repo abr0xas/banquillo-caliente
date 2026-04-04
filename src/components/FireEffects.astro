@@ -1,0 +1,337 @@
+---
+/**
+ * FireEffects — Full-page fire/ember particle system.
+ * Pure CSS, no JS, no libraries.
+ * 
+ * Layers:
+ * 1. Bottom fire glow — gradient that pulses like real fire
+ * 2. Ember particles — small dots rising from the bottom
+ * 3. Flame tongues — larger shapes that flicker along edges
+ * 4. Heat distortion — subtle wobble overlay
+ */
+---
+
+<!-- FIRE EFFECTS CONTAINER -->
+<div class="fire-effects" aria-hidden="true">
+
+    <!-- Layer 1: Bottom fire glow -->
+    <div class="fire-glow"></div>
+    <div class="fire-glow fire-glow--delayed"></div>
+
+    <!-- Layer 2: Side fire columns -->
+    <div class="fire-column fire-column--left"></div>
+    <div class="fire-column fire-column--right"></div>
+
+    <!-- Layer 3: Ember particles (30 particles) -->
+    <div class="ember-field">
+        {Array.from({ length: 30 }).map((_, i) => (
+            <div 
+                class="ember" 
+                style={`
+                    left: ${5 + Math.random() * 90}%;
+                    animation-delay: ${(Math.random() * 8).toFixed(1)}s;
+                    animation-duration: ${(3 + Math.random() * 5).toFixed(1)}s;
+                    --ember-size: ${(2 + Math.random() * 4).toFixed(1)}px;
+                    --ember-drift: ${(-40 + Math.random() * 80).toFixed(0)}px;
+                    --ember-color: ${['#ff6a00', '#ffaa00', '#ff4400', '#cc2200', '#ff8800'][Math.floor(Math.random() * 5)]};
+                `}
+            />
+        ))}
+    </div>
+
+    <!-- Layer 4: Flame tongues along bottom -->
+    <div class="flame-row">
+        {Array.from({ length: 12 }).map((_, i) => (
+            <div 
+                class="flame-tongue" 
+                style={`
+                    left: ${(i / 12) * 100 + Math.random() * 5}%;
+                    animation-delay: ${(Math.random() * 2).toFixed(1)}s;
+                    animation-duration: ${(0.8 + Math.random() * 1.2).toFixed(1)}s;
+                    --flame-height: ${(40 + Math.random() * 80).toFixed(0)}px;
+                    --flame-width: ${(20 + Math.random() * 40).toFixed(0)}px;
+                `}
+            />
+        ))}
+    </div>
+
+    <!-- Layer 5: Heat shimmer -->
+    <div class="heat-shimmer"></div>
+
+</div>
+
+<style>
+    /* ═══════════════════════════════════════════════════════ */
+    /* CONTAINER                                              */
+    /* ═══════════════════════════════════════════════════════ */
+    .fire-effects {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /* LAYER 1: BOTTOM FIRE GLOW                              */
+    /* ═══════════════════════════════════════════════════════ */
+    .fire-glow {
+        position: absolute;
+        bottom: -20%;
+        left: -10%;
+        right: -10%;
+        height: 45%;
+        background: radial-gradient(
+            ellipse at 50% 100%,
+            rgba(255, 68, 0, 0.25) 0%,
+            rgba(255, 106, 0, 0.15) 25%,
+            rgba(204, 34, 0, 0.08) 50%,
+            transparent 70%
+        );
+        animation: fire-glow-pulse 3s ease-in-out infinite;
+    }
+
+    .fire-glow--delayed {
+        animation-delay: 1.5s;
+        opacity: 0.6;
+        background: radial-gradient(
+            ellipse at 50% 100%,
+            rgba(255, 170, 0, 0.2) 0%,
+            rgba(255, 68, 0, 0.1) 30%,
+            transparent 60%
+        );
+    }
+
+    @keyframes fire-glow-pulse {
+        0%, 100% { 
+            opacity: 0.6; 
+            transform: scaleX(1) scaleY(1);
+        }
+        25% { 
+            opacity: 0.9; 
+            transform: scaleX(1.05) scaleY(1.1);
+        }
+        50% { 
+            opacity: 0.7; 
+            transform: scaleX(0.98) scaleY(0.95);
+        }
+        75% { 
+            opacity: 1; 
+            transform: scaleX(1.02) scaleY(1.05);
+        }
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /* LAYER 2: SIDE FIRE COLUMNS                             */
+    /* ═══════════════════════════════════════════════════════ */
+    .fire-column {
+        position: absolute;
+        bottom: 0;
+        width: 60px;
+        height: 100%;
+        opacity: 0.4;
+    }
+
+    .fire-column--left {
+        left: 0;
+        background: linear-gradient(
+            to top,
+            rgba(255, 68, 0, 0.3) 0%,
+            rgba(255, 106, 0, 0.15) 20%,
+            rgba(204, 34, 0, 0.05) 40%,
+            transparent 60%
+        );
+        animation: column-flicker-left 4s ease-in-out infinite;
+    }
+
+    .fire-column--right {
+        right: 0;
+        background: linear-gradient(
+            to top,
+            rgba(255, 68, 0, 0.3) 0%,
+            rgba(255, 106, 0, 0.15) 20%,
+            rgba(204, 34, 0, 0.05) 40%,
+            transparent 60%
+        );
+        animation: column-flicker-right 3.5s ease-in-out infinite;
+    }
+
+    @keyframes column-flicker-left {
+        0%, 100% { opacity: 0.3; width: 40px; }
+        30% { opacity: 0.6; width: 70px; }
+        60% { opacity: 0.2; width: 50px; }
+        80% { opacity: 0.5; width: 60px; }
+    }
+
+    @keyframes column-flicker-right {
+        0%, 100% { opacity: 0.4; width: 50px; }
+        25% { opacity: 0.2; width: 40px; }
+        50% { opacity: 0.7; width: 80px; }
+        75% { opacity: 0.3; width: 55px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /* LAYER 3: EMBER PARTICLES                               */
+    /* ═══════════════════════════════════════════════════════ */
+    .ember-field {
+        position: absolute;
+        inset: 0;
+    }
+
+    .ember {
+        position: absolute;
+        bottom: -10px;
+        width: var(--ember-size, 3px);
+        height: var(--ember-size, 3px);
+        background: var(--ember-color, #ff6a00);
+        border-radius: 50%;
+        box-shadow: 
+            0 0 4px var(--ember-color, #ff6a00),
+            0 0 8px var(--ember-color, #ff6a00);
+        animation: ember-rise linear infinite;
+        opacity: 0;
+    }
+
+    @keyframes ember-rise {
+        0% {
+            transform: translateY(0) translateX(0) scale(1);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        50% {
+            transform: translateY(-50vh) translateX(var(--ember-drift, 20px)) scale(0.8);
+            opacity: 0.8;
+        }
+        80% {
+            opacity: 0.3;
+        }
+        100% {
+            transform: translateY(-100vh) translateX(calc(var(--ember-drift, 20px) * 1.5)) scale(0.2);
+            opacity: 0;
+        }
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /* LAYER 4: FLAME TONGUES                                 */
+    /* ═══════════════════════════════════════════════════════ */
+    .flame-row {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 150px;
+    }
+
+    .flame-tongue {
+        position: absolute;
+        bottom: 0;
+        width: var(--flame-width, 30px);
+        height: var(--flame-height, 60px);
+        background: linear-gradient(
+            to top,
+            rgba(255, 68, 0, 0.6) 0%,
+            rgba(255, 106, 0, 0.4) 30%,
+            rgba(255, 170, 0, 0.2) 60%,
+            transparent 100%
+        );
+        border-radius: 50% 50% 20% 20%;
+        filter: blur(8px);
+        animation: flame-dance ease-in-out infinite;
+        transform-origin: bottom center;
+    }
+
+    @keyframes flame-dance {
+        0%, 100% {
+            transform: scaleY(1) scaleX(1) rotate(-2deg);
+            opacity: 0.7;
+        }
+        15% {
+            transform: scaleY(1.3) scaleX(0.8) rotate(3deg);
+            opacity: 1;
+        }
+        30% {
+            transform: scaleY(0.8) scaleX(1.1) rotate(-1deg);
+            opacity: 0.5;
+        }
+        50% {
+            transform: scaleY(1.4) scaleX(0.9) rotate(2deg);
+            opacity: 0.9;
+        }
+        65% {
+            transform: scaleY(0.9) scaleX(1.05) rotate(-3deg);
+            opacity: 0.6;
+        }
+        80% {
+            transform: scaleY(1.2) scaleX(0.85) rotate(1deg);
+            opacity: 0.8;
+        }
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /* LAYER 5: HEAT SHIMMER                                  */
+    /* ═══════════════════════════════════════════════════════ */
+    .heat-shimmer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30%;
+        background: transparent;
+        animation: heat-distort 2s ease-in-out infinite;
+        mix-blend-mode: overlay;
+        background-image: repeating-linear-gradient(
+            0deg,
+            transparent,
+            rgba(255, 106, 0, 0.02) 2px,
+            transparent 4px
+        );
+    }
+
+    @keyframes heat-distort {
+        0%, 100% { 
+            transform: translateX(0) skewX(0deg);
+            opacity: 0.3;
+        }
+        25% { 
+            transform: translateX(1px) skewX(0.3deg);
+            opacity: 0.5;
+        }
+        50% { 
+            transform: translateX(-1px) skewX(-0.2deg);
+            opacity: 0.4;
+        }
+        75% { 
+            transform: translateX(0.5px) skewX(0.1deg);
+            opacity: 0.6;
+        }
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /* RESPONSIVE: Reduce particles on mobile                 */
+    /* ═══════════════════════════════════════════════════════ */
+    @media (max-width: 640px) {
+        .ember:nth-child(n+16) {
+            display: none;
+        }
+        .flame-tongue:nth-child(n+7) {
+            display: none;
+        }
+        .fire-column {
+            width: 30px;
+        }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .ember,
+        .flame-tongue,
+        .fire-glow,
+        .fire-column,
+        .heat-shimmer {
+            animation: none;
+            opacity: 0.3;
+        }
+    }
+</style>

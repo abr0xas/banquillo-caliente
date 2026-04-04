@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import FireEffects from '../components/FireEffects.astro';
 
 interface Props {
 	title: string;
@@ -43,10 +44,11 @@ const {
         <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 	</head>
 	<body class="bg-inferno-dark text-inferno min-h-screen font-mono">
+        <FireEffects />
         <div class="scanlines"></div>
         
         <!-- HEADER CON MARCA REALTRONO -->
-        <header class="sticky top-0 z-50 w-full border-b-2 border-inferno/60 bg-inferno-dark/95 backdrop-blur-sm">
+        <header class="sticky top-0 z-50 relative w-full border-b-2 border-inferno/60 bg-inferno-dark/95 backdrop-blur-sm">
             <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
                 <!-- LOGO + MARCA -->
                 <a href="/" class="flex items-center gap-3 group">
@@ -72,10 +74,12 @@ const {
             </div>
         </header>
 
-		<slot />
+		<div class="relative z-10">
+			<slot />
+		</div>
         
         <!-- FOOTER -->
-        <footer class="w-full border-t border-inferno/20 mt-12 py-6 px-4">
+        <footer class="relative z-10 w-full border-t border-inferno/20 mt-12 py-6 px-4">
             <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-2">
                     <span class="text-lg">🔥</span>
