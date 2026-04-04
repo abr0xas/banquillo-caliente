@@ -28,7 +28,6 @@ export default function AudioSystem() {
 
         const now = audioCtx.current.currentTime;
 
-        // HEARTBEAT Logic (Lub-Dub)
         const playThump = (time: number, freq: number, volume: number) => {
             const osc = audioCtx.current!.createOscillator();
             const gain = audioCtx.current!.createGain();
@@ -77,10 +76,8 @@ export default function AudioSystem() {
 
     useEffect(() => {
         if (isEnabled) {
-            // Heartbeat loop (~70 BPM)
             heartbeatTimer.current = window.setInterval(() => {
                 playHeartbeat();
-                // Randomly add a monitor beep occasionally for atmosphere
                 if (Math.random() > 0.7) {
                     setTimeout(playBeep, 400);
                 }
@@ -96,17 +93,17 @@ export default function AudioSystem() {
             <button
                 onClick={isEnabled ? stopAudio : initAudio}
                 class={`px-2 py-1 border text-[10px] tracking-widest font-bold transition-all duration-300 cursor-pointer ${isEnabled
-                        ? 'bg-codec-green text-black border-codec-green shadow-[0_0_10px_#00ee00]'
-                        : 'bg-black text-codec-green border-codec-green/50 opacity-60 hover:opacity-100'
+                        ? 'bg-inferno text-black border-inferno shadow-[0_0_10px_#ff6a00]'
+                        : 'bg-black text-inferno border-inferno/50 opacity-60 hover:opacity-100'
                     }`}
             >
                 {isEnabled ? 'COMMS: SYNCED' : 'SYNC COMMS AUDIO'}
             </button>
             {isEnabled && (
                 <div class="flex gap-0.5 items-end h-3 animate-pulse">
-                    <div class="w-0.5 h-full bg-codec-green"></div>
-                    <div class="w-0.5 h-1/2 bg-codec-green"></div>
-                    <div class="w-0.5 h-3/4 bg-codec-green"></div>
+                    <div class="w-0.5 h-full bg-inferno"></div>
+                    <div class="w-0.5 h-1/2 bg-inferno-ember"></div>
+                    <div class="w-0.5 h-3/4 bg-inferno"></div>
                 </div>
             )}
         </div>
