@@ -17,7 +17,7 @@ const currentDays = Math.floor((nowUTC - startUTC) / (1000 * 60 * 60 * 24));
 
 // Icon mapping
 const getResultIcon = (result: string) => {
-    if (result === 'W') return '✅';
+    if (result === 'W') return '🔥';
     if (result === 'L') return '💀';
     return '⚠️';
 };
@@ -32,17 +32,17 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
         <div class="scanline-moving"></div>
         
         <!-- ═══════════════════════════════════════════════════════════ -->
-        <!-- SECCIÓN 1: ESTADO PRINCIPAL + DÍAS (Mobile First, Above the fold) -->
+        <!-- SECCIÓN 1: ESTADO PRINCIPAL + DÍAS -->
         <!-- ═══════════════════════════════════════════════════════════ -->
         <section class="w-full max-w-lg mx-auto mb-8">
             
-            <!-- STATUS BADGE - Lo primero que ve el usuario -->
+            <!-- STATUS BADGE -->
             <div class="text-center mb-6">
                 <div class={`
                     inline-flex items-center gap-3 px-6 py-3 border-2
-                    ${status.level === 4 ? 'border-red-500 bg-red-500/10 animate-pulse' : ''}
-                    ${status.level === 3 ? 'border-orange-500 bg-orange-500/10' : ''}
-                    ${status.level === 2 ? 'border-yellow-500 bg-yellow-500/10' : ''}
+                    ${status.level === 4 ? 'border-inferno-red bg-inferno-red/10 animate-pulse' : ''}
+                    ${status.level === 3 ? 'border-inferno bg-inferno/10' : ''}
+                    ${status.level === 2 ? 'border-inferno-bright bg-inferno-bright/10' : ''}
                     ${status.level === 1 ? 'border-green-500 bg-green-500/10' : ''}
                     ${status.level === 5 ? 'border-gray-500 bg-gray-500/10' : ''}
                 `}>
@@ -50,14 +50,14 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
                         {status.level === 1 && '🛡️'}
                         {status.level === 2 && '😎'}
                         {status.level === 3 && '👀'}
-                        {status.level === 4 && '⚠️'}
+                        {status.level === 4 && '🔥'}
                         {status.level === 5 && '💀'}
                     </span>
                     <span class={`
                         font-['Press_Start_2P'] text-sm sm:text-base tracking-wide
-                        ${status.level === 4 ? 'text-red-400' : ''}
-                        ${status.level === 3 ? 'text-orange-400' : ''}
-                        ${status.level === 2 ? 'text-yellow-400' : ''}
+                        ${status.level === 4 ? 'text-inferno-red' : ''}
+                        ${status.level === 3 ? 'text-inferno' : ''}
+                        ${status.level === 2 ? 'text-inferno-bright' : ''}
                         ${status.level === 1 ? 'text-green-400' : ''}
                         ${status.level === 5 ? 'text-gray-400' : ''}
                     `}>
@@ -66,29 +66,29 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
                 </div>
             </div>
             
-            <!-- DÍAS COUNTER - Grande y prominente -->
-            <div class="relative border-2 border-codec-green bg-codec-dark/90 p-6 text-center mb-4">
+            <!-- DÍAS COUNTER -->
+            <div class="relative border-2 border-inferno bg-inferno-dark/90 p-6 text-center mb-4">
                 <!-- Corner decorations -->
-                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-codec-green"></div>
-                <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-codec-green"></div>
-                <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-codec-green"></div>
-                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-codec-green"></div>
+                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-inferno"></div>
+                <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-inferno"></div>
+                <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-inferno"></div>
+                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-inferno"></div>
                 
-                <p class="text-[10px] text-codec-green/60 tracking-[0.3em] uppercase mb-2">
+                <p class="text-[10px] text-inferno/60 tracking-[0.3em] uppercase mb-2">
                     Días en el Trono
                 </p>
-                <div class="font-['Press_Start_2P'] text-6xl sm:text-7xl md:text-8xl text-codec-green text-glow tabular-nums leading-none">
+                <div class="font-['Press_Start_2P'] text-6xl sm:text-7xl md:text-8xl text-inferno text-glow tabular-nums leading-none">
                     {currentDays}
                 </div>
-                <p class="text-xs text-codec-green/40 mt-3">
+                <p class="text-xs text-inferno/40 mt-3">
                     Desde el {startDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
                 </p>
             </div>
             
             <!-- NOMBRE DEL ENTRENADOR -->
             <div class="text-center">
-                <p class="text-[10px] text-codec-green/40 tracking-widest mb-1">{coach.nickname?.toUpperCase() || 'MÍSTER'}</p>
-                <h1 class="font-['Press_Start_2P'] text-lg sm:text-xl text-codec-green text-glow tracking-wide">
+                <p class="text-[10px] text-inferno/40 tracking-widest mb-1">{coach.nickname?.toUpperCase() || 'MÍSTER'}</p>
+                <h1 class="font-['Press_Start_2P'] text-lg sm:text-xl text-inferno text-glow tracking-wide">
                     {coach.name.toUpperCase()}
                 </h1>
             </div>
@@ -99,24 +99,22 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
         <!-- SECCIÓN 2: BARRA DE VIDA / ENERGÍA -->
         <!-- ═══════════════════════════════════════════════════════════ -->
         <section class="w-full max-w-lg mx-auto mb-8">
-            <div class="border border-codec-green/40 bg-codec-dark/80 p-4">
+            <div class="border border-inferno/40 bg-inferno-dark/80 p-4">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-[10px] text-codec-green/60 tracking-widest">LIFE</span>
-                    <span class="font-mono text-sm text-codec-green">{status.lifePercent}%</span>
+                    <span class="text-[10px] text-inferno/60 tracking-widest">LIFE</span>
+                    <span class="font-mono text-sm text-inferno">{status.lifePercent}%</span>
                 </div>
-                <div class="w-full h-6 bg-black border border-codec-green/40 relative overflow-hidden">
-                    <!-- Segmented bar -->
+                <div class="w-full h-6 bg-black border border-inferno/40 relative overflow-hidden">
                     <div 
                         class={`
                             h-full transition-all duration-1000 relative
-                            ${status.lifePercent > 60 ? 'bg-green-500' : ''}
-                            ${status.lifePercent > 40 && status.lifePercent <= 60 ? 'bg-yellow-500' : ''}
-                            ${status.lifePercent > 20 && status.lifePercent <= 40 ? 'bg-orange-500' : ''}
-                            ${status.lifePercent <= 20 ? 'bg-red-500 animate-pulse' : ''}
+                            ${status.lifePercent > 60 ? 'bg-inferno-bright' : ''}
+                            ${status.lifePercent > 40 && status.lifePercent <= 60 ? 'bg-inferno' : ''}
+                            ${status.lifePercent > 20 && status.lifePercent <= 40 ? 'bg-inferno-ember' : ''}
+                            ${status.lifePercent <= 20 ? 'bg-inferno-red animate-pulse' : ''}
                         `}
                         style={`width: ${status.lifePercent}%`}
                     >
-                        <!-- Segmented overlay -->
                         <div class="absolute inset-0 flex">
                             {Array.from({ length: 20 }).map(() => (
                                 <div class="flex-1 border-r border-black/40"></div>
@@ -125,8 +123,8 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
                     </div>
                 </div>
                 {status.lifePercent <= 25 && (
-                    <p class="text-[10px] text-red-400 mt-2 animate-pulse text-center tracking-widest">
-                        ⚠️ CRITICAL - DANGER ZONE ⚠️
+                    <p class="text-[10px] text-inferno-red mt-2 animate-pulse text-center tracking-widest">
+                        🔥 CRITICAL - DANGER ZONE 🔥
                     </p>
                 )}
             </div>
@@ -147,7 +145,7 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
         <!-- ═══════════════════════════════════════════════════════════ -->
         <section class="w-full max-w-5xl mx-auto mb-8">
             <div class="text-center mb-4">
-                <span class="text-[10px] text-codec-green/40 tracking-[0.3em]">PRÓXIMA BATALLA</span>
+                <span class="text-[10px] text-inferno/40 tracking-[0.3em]">PRÓXIMA BATALLA</span>
             </div>
             <GTATimer 
                 client:load 
@@ -158,7 +156,7 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════ -->
-        <!-- SECCIÓN 5: CODEC SCREEN (Imagen del entrenador) -->
+        <!-- SECCIÓN 5: CODEC SCREEN -->
         <!-- ═══════════════════════════════════════════════════════════ -->
         <section class="w-full max-w-4xl mx-auto mb-8">
             <CodecScreen 
@@ -183,8 +181,8 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
                     {recentResults.map((match) => (
                         <div class="flex items-center gap-2 text-[10px] font-mono">
                             <span class="text-xs">{getResultIcon(match.result)}</span>
-                            <span class="text-codec-green font-bold truncate max-w-[80px]">{match.opponent}</span>
-                            <span class="text-codec-green/40">[{match.score}]</span>
+                            <span class="text-inferno font-bold truncate max-w-[80px]">{match.opponent}</span>
+                            <span class="text-inferno/40">[{match.score}]</span>
                         </div>
                     ))}
                 </div>
@@ -192,7 +190,7 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
                 <!-- RIVAL RESULTS -->
                 <div slot="rival-results" class="flex flex-col gap-1">
                     {opponent.recentResults.slice(0, 3).map((match) => (
-                        <div class="flex items-center gap-2 text-[10px] font-mono text-codec-green/80">
+                        <div class="flex items-center gap-2 text-[10px] font-mono text-inferno/80">
                             <span>{getResultIcon(match.result)}</span>
                             <span class="truncate max-w-[70px]">{match.opponent}</span>
                             <span class="text-[8px] opacity-40">{match.score}</span>
@@ -202,11 +200,11 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
 
                 <!-- BOTTOM SUBTITLES -->
                 <div slot="subtitles" class="flex flex-col items-center gap-2">
-                    <p class="text-lg sm:text-xl text-codec-green font-bold text-glow uppercase tracking-[0.1em] leading-tight max-w-2xl text-center">
+                    <p class="text-lg sm:text-xl text-inferno font-bold text-glow uppercase tracking-[0.1em] leading-tight max-w-2xl text-center">
                         {status.description}
                     </p>
-                    <div class="w-12 h-[1px] bg-codec-green/20 my-2"></div>
-                    <p class="text-xs sm:text-sm text-codec-green/60 font-mono italic max-w-xl text-center">
+                    <div class="w-12 h-[1px] bg-inferno/20 my-2"></div>
+                    <p class="text-xs sm:text-sm text-inferno/60 font-mono italic max-w-xl text-center">
                         "{status.subtext}"
                     </p>
                 </div>
@@ -214,7 +212,7 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════ -->
-        <!-- SECCIÓN 6: COMPARADOR HISTÓRICO (Caídos del Trono) -->
+        <!-- SECCIÓN 6: CAÍDOS DEL TRONO -->
         <!-- ═══════════════════════════════════════════════════════════ -->
         <section class="w-full max-w-lg mx-auto mb-8">
             <FallenCoaches 
@@ -228,10 +226,10 @@ const pageTitle = `👑 REALTRONO — ${coach.name.toUpperCase()} | ${currentDay
         <!-- ═══════════════════════════════════════════════════════════ -->
         <section class="w-full max-w-lg mx-auto">
             <div class="flex flex-wrap justify-center gap-4">
-                <button class="codec-panel px-6 py-3 text-sm font-bold tracking-widest hover:bg-codec-green hover:text-black transition-all duration-300">
+                <button class="codec-panel px-6 py-3 text-sm font-bold tracking-widest hover:bg-inferno hover:text-black transition-all duration-300">
                     📊 VOTAR STATUS
                 </button>
-                <button class="codec-panel px-6 py-3 text-sm font-bold tracking-widest hover:bg-codec-green hover:text-black transition-all duration-300">
+                <button class="codec-panel px-6 py-3 text-sm font-bold tracking-widest hover:bg-inferno hover:text-black transition-all duration-300">
                     📤 COMPARTIR
                 </button>
             </div>

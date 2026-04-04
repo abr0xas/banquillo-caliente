@@ -25,7 +25,6 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
             const start = new Date(startDate);
             const now = new Date();
 
-            // Compare UTC calendar dates to avoid timezone drift
             const startUTC = Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate());
             const nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 
@@ -34,14 +33,12 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
 
         setDuration({ days: calcDays() });
 
-        // Recalculate at midnight UTC
         const now = new Date();
         const nextMidnightUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
         const msToMidnight = nextMidnightUTC.getTime() - now.getTime();
 
         const timeout = setTimeout(() => {
             setDuration({ days: calcDays() });
-            // Then update every 24h
             const interval = setInterval(() => {
                 setDuration({ days: calcDays() });
             }, 24 * 60 * 60 * 1000);
@@ -67,7 +64,6 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
                 setDisplayDays(target);
                 clearInterval(timer);
 
-                // Start transition to MATCH after delay
                 setTimeout(() => {
                     setIsTransitioning(true);
                     setTimeout(() => {
@@ -129,8 +125,8 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
 
             {phase === 'SURVIVAL' ? (
                 <div class="flex flex-col items-center justify-center w-full min-h-[120px]">
-                    <h3 class="text-[8px] sm:text-[10px] uppercase tracking-[0.3em] opacity-70 mb-1 sm:mb-2 font-bold">Días Sobreviviendo</h3>
-                    <div class="font-mono text-7xl sm:text-8xl md:text-9xl tracking-wider text-glow font-bold animate-pulse leading-none">
+                    <h3 class="text-[8px] sm:text-[10px] uppercase tracking-[0.3em] opacity-70 mb-1 sm:mb-2 font-bold text-inferno">Días Sobreviviendo</h3>
+                    <div class="font-mono text-7xl sm:text-8xl md:text-9xl tracking-wider text-glow font-bold animate-pulse leading-none text-inferno">
                         {displayDays}
                     </div>
                 </div>
@@ -141,19 +137,19 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
 
                         {/* AWAY TEAM (LEFT) */}
                         <div class="flex flex-col items-center gap-1 flex-1">
-                            <img src={awayTeam.logo} class="shrink-0 w-8 h-8 md:w-14 md:h-14 object-contain grayscale brightness-125" />
-                            <span class="font-mono text-3xl md:text-6xl font-bold text-codec-green text-glow-sharp">{score.away}</span>
+                            <img src={awayTeam.logo} class="shrink-0 w-8 h-8 md:w-14 md:h-14 object-contain brightness-125" style="filter: sepia(60%) hue-rotate(-10deg) saturate(150%);" />
+                            <span class="font-mono text-3xl md:text-6xl font-bold text-inferno text-glow-sharp">{score.away}</span>
                             <div class="flex gap-1">
-                                <button onClick={() => handleScore('away', 1)} class="w-5 h-5 flex items-center justify-center border border-codec-green text-[10px] hover:bg-codec-green hover:text-black cursor-pointer">+</button>
-                                <button onClick={() => handleScore('away', -1)} class="w-5 h-5 flex items-center justify-center border border-codec-green text-[10px] hover:bg-codec-green hover:text-black cursor-pointer">-</button>
+                                <button onClick={() => handleScore('away', 1)} class="w-5 h-5 flex items-center justify-center border border-inferno text-[10px] text-inferno hover:bg-inferno hover:text-black cursor-pointer">+</button>
+                                <button onClick={() => handleScore('away', -1)} class="w-5 h-5 flex items-center justify-center border border-inferno text-[10px] text-inferno hover:bg-inferno hover:text-black cursor-pointer">-</button>
                             </div>
-                            <span class="text-[7px] md:text-[8px] uppercase opacity-40 font-bold tracking-widest mt-1 text-center truncate max-w-[60px]">{awayTeam.name}</span>
+                            <span class="text-[7px] md:text-[8px] uppercase opacity-40 font-bold tracking-widest mt-1 text-center truncate max-w-[60px] text-inferno">{awayTeam.name}</span>
                         </div>
 
                         {/* CENTER: MASSIVE COUNTDOWN */}
-                        <div class="flex flex-col items-center flex-[1.5] py-2 border-x border-codec-green/10">
-                            <h3 class="text-[7px] md:text-[9px] uppercase tracking-[0.2em] text-red-500 font-bold animate-pulse mb-1">STRIKE CLOCK</h3>
-                            <div class="font-mono text-3xl md:text-7xl tracking-tighter text-glow-sharp font-bold flex gap-1 items-baseline">
+                        <div class="flex flex-col items-center flex-[1.5] py-2 border-x border-inferno/10">
+                            <h3 class="text-[7px] md:text-[9px] uppercase tracking-[0.2em] text-inferno-red font-bold animate-pulse mb-1">STRIKE CLOCK</h3>
+                            <div class="font-mono text-3xl md:text-7xl tracking-tighter text-glow-sharp font-bold flex gap-1 items-baseline text-inferno">
                                 <div class="flex flex-col items-center leading-none">
                                     <span>{String(matchTime.hours).padStart(2, '0')}</span>
                                     <span class="text-[5px] sm:text-[8px] opacity-40 uppercase">HRS</span>
@@ -173,21 +169,21 @@ export default function TenureTimer({ startDate, matchDate, homeTeam, awayTeam }
 
                         {/* HOME TEAM (RIGHT) */}
                         <div class="flex flex-col items-center gap-1 flex-1">
-                            <img src={homeTeam.logo} class="shrink-0 w-8 h-8 md:w-14 md:h-14 object-contain grayscale brightness-125" />
-                            <span class="font-mono text-3xl md:text-6xl font-bold text-codec-green text-glow-sharp">{score.home}</span>
+                            <img src={homeTeam.logo} class="shrink-0 w-8 h-8 md:w-14 md:h-14 object-contain brightness-125" style="filter: sepia(60%) hue-rotate(-10deg) saturate(150%);" />
+                            <span class="font-mono text-3xl md:text-6xl font-bold text-inferno text-glow-sharp">{score.home}</span>
                             <div class="flex gap-1">
-                                <button onClick={() => handleScore('home', 1)} class="w-5 h-5 flex items-center justify-center border border-codec-green text-[10px] hover:bg-codec-green hover:text-black cursor-pointer">+</button>
-                                <button onClick={() => handleScore('home', -1)} class="w-5 h-5 flex items-center justify-center border border-codec-green text-[10px] hover:bg-codec-green hover:text-black cursor-pointer">-</button>
+                                <button onClick={() => handleScore('home', 1)} class="w-5 h-5 flex items-center justify-center border border-inferno text-[10px] text-inferno hover:bg-inferno hover:text-black cursor-pointer">+</button>
+                                <button onClick={() => handleScore('home', -1)} class="w-5 h-5 flex items-center justify-center border border-inferno text-[10px] text-inferno hover:bg-inferno hover:text-black cursor-pointer">-</button>
                             </div>
-                            <span class="text-[7px] md:text-[8px] uppercase opacity-40 font-bold tracking-widest mt-1 text-center truncate max-w-[60px]">{homeTeam.name}</span>
+                            <span class="text-[7px] md:text-[8px] uppercase opacity-40 font-bold tracking-widest mt-1 text-center truncate max-w-[60px] text-inferno">{homeTeam.name}</span>
                         </div>
 
                     </div>
 
-                    {/* MINI SHARE BUTTONS (Icon only) */}
+                    {/* MINI SHARE BUTTONS */}
                     <div class="flex gap-4 items-center">
                         <button onClick={() => handleShare('X')} class="w-8 h-8 flex items-center justify-center border-2 border-white text-white font-bold text-[10px] bg-black hover:bg-white hover:text-black transition-all shadow-[2px_2px_0_white] cursor-pointer">𝕏</button>
-                        <button onClick={() => handleShare('WA')} class="w-8 h-8 flex items-center justify-center border-2 border-codec-green text-codec-green font-bold text-[10px] bg-black hover:bg-codec-green hover:text-black transition-all shadow-[2px_2px_0_#00ee00] cursor-pointer">WA</button>
+                        <button onClick={() => handleShare('WA')} class="w-8 h-8 flex items-center justify-center border-2 border-inferno text-inferno font-bold text-[10px] bg-black hover:bg-inferno hover:text-black transition-all shadow-[2px_2px_0_#ff6a00] cursor-pointer">WA</button>
                     </div>
                 </div>
             )}

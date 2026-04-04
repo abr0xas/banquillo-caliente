@@ -1,21 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-    --color-codec-green: #00ee00;
-    --color-codec-green-dim: #005500;
-    --color-codec-dark: #0c0c0c;
-    --color-codec-bg: #101810;
-    --color-codec-border: rgba(0, 238, 0, 0.3);
+    --color-inferno: #ff6a00;
+    --color-inferno-bright: #ffaa00;
+    --color-inferno-dim: #551a00;
+    --color-inferno-red: #cc2200;
+    --color-inferno-dark: #0c0604;
+    --color-inferno-bg: #1a0a04;
+    --color-inferno-border: rgba(255, 106, 0, 0.3);
+    --color-inferno-ember: #ff4400;
 
     --font-mono: 'VT323', monospace;
 
-    --shadow-codec: 0 0 10px rgba(0, 238, 0, 0.4);
+    --shadow-inferno: 0 0 10px rgba(255, 106, 0, 0.4);
 }
 
 /* Base Styles */
 body {
-    background-color: var(--color-codec-dark);
-    color: var(--color-codec-green);
+    background-color: var(--color-inferno-dark);
+    color: var(--color-inferno);
     font-family: var(--font-mono);
     overflow-x: hidden;
     box-sizing: border-box;
@@ -28,7 +31,7 @@ body {
     box-sizing: inherit;
 }
 
-/* CRT Scanline Effect */
+/* CRT Scanline Effect — Ember tint */
 .scanlines {
     position: fixed;
     top: 0;
@@ -36,7 +39,7 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(transparent 50%,
-            rgba(0, 0, 0, 0.1) 50%);
+            rgba(20, 5, 0, 0.15) 50%);
     background-size: 100% 3px;
     z-index: 100;
     pointer-events: none;
@@ -50,23 +53,23 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(18, 16, 16, 0.1);
+    background: rgba(18, 8, 4, 0.1);
     opacity: 0;
     z-index: 101;
     pointer-events: none;
     animation: flicker 0.15s infinite;
 }
 
-/* Moving Scanline Overlay */
+/* Moving Scanline Overlay — Fire glow */
 .scanline-moving {
     width: 100%;
     height: 100px;
     z-index: 102;
     background: linear-gradient(0deg,
             rgba(0, 0, 0, 0) 0%,
-            rgba(0, 238, 0, 0.1) 50%,
+            rgba(255, 106, 0, 0.08) 50%,
             rgba(0, 0, 0, 0) 100%);
-    opacity: 0.1;
+    opacity: 0.15;
     position: fixed;
     bottom: 100%;
     pointer-events: none;
@@ -170,27 +173,27 @@ body {
     }
 }
 
-/* Text Glow */
+/* Text Glow — Fire */
 .text-glow {
-    text-shadow: 0 0 5px var(--color-codec-green), 0 0 10px var(--color-codec-green);
+    text-shadow: 0 0 5px var(--color-inferno), 0 0 10px var(--color-inferno), 0 0 20px var(--color-inferno-red);
 }
 
 .text-glow-sharp {
-    text-shadow: 0 0 2px var(--color-codec-green), 0 0 4px rgba(0, 238, 0, 0.8);
+    text-shadow: 0 0 2px var(--color-inferno), 0 0 4px rgba(255, 106, 0, 0.8);
 }
 
 .border-glow {
-    box-shadow: 0 0 10px var(--color-codec-green-dim);
-    border-color: var(--color-codec-green);
+    box-shadow: 0 0 10px var(--color-inferno-dim);
+    border-color: var(--color-inferno);
 }
 
 .text-gtavi-glow {
     color: white;
-    text-shadow: 1.1px 0px 0px var(--color-gtavi-pink);
+    text-shadow: 1.1px 0px 0px var(--color-inferno-red);
 }
 
 .codec-panel {
-    background: rgba(16, 24, 16, 0.8);
-    border: 1px solid var(--color-codec-green);
-    box-shadow: inset 0 0 15px rgba(0, 238, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.5);
+    background: rgba(26, 10, 4, 0.8);
+    border: 1px solid var(--color-inferno);
+    box-shadow: inset 0 0 15px rgba(255, 68, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.5);
 }
