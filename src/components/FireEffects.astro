@@ -1,4 +1,6 @@
 ---
+import statusData from '../data/status.json';
+
 /**
  * FireEffects — Full-page fire/ember particle system.
  * Pure CSS, no JS, no libraries.
@@ -9,6 +11,65 @@
  * 3. Flame tongues — larger shapes that flicker along edges
  * 4. Heat distortion — subtle wobble overlay
  */
+
+// Get current status level for theme-aware effects
+const currentLevel = statusData.status.level;
+
+// Theme-aware color palettes
+const getThemeColors = (level: number) => {
+    switch(level) {
+        case 1: // INTOCABLE (Green/Blue)
+            return {
+                primary: '#00ff88',
+                bright: '#80ffc0',
+                ember: '#00cc66',
+                red: '#00aa55',
+                particles: ['#00ff88', '#80ffc0', '#00cc66', '#00aa55', '#00ffaa']
+            };
+        case 2: // TRANQUILO (Yellow/Gold)
+            return {
+                primary: '#ffcc00',
+                bright: '#ffdd44',
+                ember: '#ffaa00',
+                red: '#cc9900',
+                particles: ['#ffcc00', '#ffdd44', '#ffaa00', '#cc9900', '#ffcc33']
+            };
+        case 3: // MURMULLOS (Orange)
+            return {
+                primary: '#ff8800',
+                bright: '#ffaa44',
+                ember: '#ff6600',
+                red: '#cc6600',
+                particles: ['#ff8800', '#ffaa44', '#ff6600', '#cc6600', '#ff9933']
+            };
+        case 4: // PELIGRO (Red/Fire)
+            return {
+                primary: '#ff6a00',
+                bright: '#ffaa00',
+                ember: '#ff4400',
+                red: '#cc2200',
+                particles: ['#ff6a00', '#ffaa00', '#ff4400', '#cc2200', '#ff8800']
+            };
+        case 5: // GAME OVER (Black/Gray)
+            return {
+                primary: '#666666',
+                bright: '#999999',
+                ember: '#888888',
+                red: '#444444',
+                particles: ['#666666', '#999999', '#888888', '#444444', '#aaaaaa']
+            };
+        default:
+            return {
+                primary: '#ff6a00',
+                bright: '#ffaa00',
+                ember: '#ff4400',
+                red: '#cc2200',
+                particles: ['#ff6a00', '#ffaa00', '#ff4400', '#cc2200', '#ff8800']
+            };
+    }
+};
+
+const themeColors = getThemeColors(currentLevel);
 ---
 
 <!-- FIRE EFFECTS CONTAINER -->
@@ -33,7 +94,7 @@
                     animation-duration: ${(3 + Math.random() * 5).toFixed(1)}s;
                     --ember-size: ${(2 + Math.random() * 4).toFixed(1)}px;
                     --ember-drift: ${(-40 + Math.random() * 80).toFixed(0)}px;
-                    --ember-color: ${['#ff6a00', '#ffaa00', '#ff4400', '#cc2200', '#ff8800'][Math.floor(Math.random() * 5)]};
+                    --ember-color: ${themeColors.particles[Math.floor(Math.random() * themeColors.particles.length)]};
                 `}
             />
         ))}
@@ -83,9 +144,9 @@
         height: 45%;
         background: radial-gradient(
             ellipse at 50% 100%,
-            rgba(255, 68, 0, 0.25) 0%,
-            rgba(255, 106, 0, 0.15) 25%,
-            rgba(204, 34, 0, 0.08) 50%,
+            ${themeColors.ember}44 0%,
+            ${themeColors.primary}26 25%,
+            ${themeColors.red}14 50%,
             transparent 70%
         );
         animation: fire-glow-pulse 3s ease-in-out infinite;
@@ -96,8 +157,8 @@
         opacity: 0.6;
         background: radial-gradient(
             ellipse at 50% 100%,
-            rgba(255, 170, 0, 0.2) 0%,
-            rgba(255, 68, 0, 0.1) 30%,
+            ${themeColors.bright}33 0%,
+            ${themeColors.ember}1a 30%,
             transparent 60%
         );
     }
@@ -136,9 +197,9 @@
         left: 0;
         background: linear-gradient(
             to top,
-            rgba(255, 68, 0, 0.3) 0%,
-            rgba(255, 106, 0, 0.15) 20%,
-            rgba(204, 34, 0, 0.05) 40%,
+            ${themeColors.ember}4d 0%,
+            ${themeColors.primary}26 20%,
+            ${themeColors.red}0d 40%,
             transparent 60%
         );
         animation: column-flicker-left 4s ease-in-out infinite;
@@ -148,9 +209,9 @@
         right: 0;
         background: linear-gradient(
             to top,
-            rgba(255, 68, 0, 0.3) 0%,
-            rgba(255, 106, 0, 0.15) 20%,
-            rgba(204, 34, 0, 0.05) 40%,
+            ${themeColors.ember}4d 0%,
+            ${themeColors.primary}26 20%,
+            ${themeColors.red}0d 40%,
             transparent 60%
         );
         animation: column-flicker-right 3.5s ease-in-out infinite;
@@ -231,9 +292,9 @@
         height: var(--flame-height, 60px);
         background: linear-gradient(
             to top,
-            rgba(255, 68, 0, 0.6) 0%,
-            rgba(255, 106, 0, 0.4) 30%,
-            rgba(255, 170, 0, 0.2) 60%,
+            ${themeColors.ember}99 0%,
+            ${themeColors.primary}66 30%,
+            ${themeColors.bright}33 60%,
             transparent 100%
         );
         border-radius: 50% 50% 20% 20%;
@@ -284,7 +345,7 @@
         background-image: repeating-linear-gradient(
             0deg,
             transparent,
-            rgba(255, 106, 0, 0.02) 2px,
+            ${themeColors.primary}05 2px,
             transparent 4px
         );
     }

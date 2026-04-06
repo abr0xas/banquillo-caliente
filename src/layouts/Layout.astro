@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import FireEffects from '../components/FireEffects.astro';
+import statusData from '../data/status.json';
 
 interface Props {
 	title: string;
@@ -13,10 +14,14 @@ const {
     description = "👑 REALTRONO — El trono más peligroso del fútbol. ¿Cuánto durará el míster?",
     image = "/og-default.jpg"
 } = Astro.props;
+
+// Get current status level for theme
+const currentLevel = statusData.status.level;
+const themeClass = `level-${currentLevel}`;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme={themeClass} class="theme-transition">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
