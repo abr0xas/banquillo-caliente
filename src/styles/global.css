@@ -1,18 +1,110 @@
 @import "tailwindcss";
 
+/* Theme variables for different status levels */
+:root {
+    /* Default theme (Level 4 - PELIGRO) */
+    --color-primary: #ff6a00;
+    --color-primary-bright: #ffaa00;
+    --color-primary-dim: #551a00;
+    --color-primary-red: #cc2200;
+    --color-dark: #0c0604;
+    --color-bg: #1a0a04;
+    --color-border: rgba(255, 106, 0, 0.3);
+    --color-ember: #ff4400;
+    --color-text: #ff6a00;
+    --color-text-secondary: rgba(255, 106, 0, 0.6);
+    --theme-name: 'inferno';
+}
+
+/* Level 1 - INTOCABLE (Green/Blue) */
+[data-theme="level-1"] {
+    --color-primary: #00ff88;
+    --color-primary-bright: #80ffc0;
+    --color-primary-dim: #003322;
+    --color-primary-red: #00aa55;
+    --color-dark: #040c08;
+    --color-bg: #041a0c;
+    --color-border: rgba(0, 255, 136, 0.3);
+    --color-ember: #00cc66;
+    --color-text: #00ff88;
+    --color-text-secondary: rgba(0, 255, 136, 0.6);
+    --theme-name: 'intocable';
+}
+
+/* Level 2 - TRANQUILO (Yellow/Gold) */
+[data-theme="level-2"] {
+    --color-primary: #ffcc00;
+    --color-primary-bright: #ffdd44;
+    --color-primary-dim: #553300;
+    --color-primary-red: #cc9900;
+    --color-dark: #0c0a04;
+    --color-bg: #1a1404;
+    --color-border: rgba(255, 204, 0, 0.3);
+    --color-ember: #ffaa00;
+    --color-text: #ffcc00;
+    --color-text-secondary: rgba(255, 204, 0, 0.6);
+    --theme-name: 'tranquilo';
+}
+
+/* Level 3 - MURMULLOS (Orange) */
+[data-theme="level-3"] {
+    --color-primary: #ff8800;
+    --color-primary-bright: #ffaa44;
+    --color-primary-dim: #552200;
+    --color-primary-red: #cc6600;
+    --color-dark: #0c0804;
+    --color-bg: #1a1004;
+    --color-border: rgba(255, 136, 0, 0.3);
+    --color-ember: #ff6600;
+    --color-text: #ff8800;
+    --color-text-secondary: rgba(255, 136, 0, 0.6);
+    --theme-name: 'murmullos';
+}
+
+/* Level 4 - PELIGRO (Red/Fire - Default) */
+[data-theme="level-4"] {
+    --color-primary: #ff6a00;
+    --color-primary-bright: #ffaa00;
+    --color-primary-dim: #551a00;
+    --color-primary-red: #cc2200;
+    --color-dark: #0c0604;
+    --color-bg: #1a0a04;
+    --color-border: rgba(255, 106, 0, 0.3);
+    --color-ember: #ff4400;
+    --color-text: #ff6a00;
+    --color-text-secondary: rgba(255, 106, 0, 0.6);
+    --theme-name: 'inferno';
+}
+
+/* Level 5 - GAME OVER (Black/Gray) */
+[data-theme="level-5"] {
+    --color-primary: #666666;
+    --color-primary-bright: #999999;
+    --color-primary-dim: #222222;
+    --color-primary-red: #444444;
+    --color-dark: #040404;
+    --color-bg: #0a0a0a;
+    --color-border: rgba(102, 102, 102, 0.3);
+    --color-ember: #888888;
+    --color-text: #aaaaaa;
+    --color-text-secondary: rgba(170, 170, 170, 0.6);
+    --theme-name: 'game-over';
+}
+
 @theme {
-    --color-inferno: #ff6a00;
-    --color-inferno-bright: #ffaa00;
-    --color-inferno-dim: #551a00;
-    --color-inferno-red: #cc2200;
-    --color-inferno-dark: #0c0604;
-    --color-inferno-bg: #1a0a04;
-    --color-inferno-border: rgba(255, 106, 0, 0.3);
-    --color-inferno-ember: #ff4400;
+    /* Map CSS variables to Tailwind theme */
+    --color-inferno: var(--color-primary);
+    --color-inferno-bright: var(--color-primary-bright);
+    --color-inferno-dim: var(--color-primary-dim);
+    --color-inferno-red: var(--color-primary-red);
+    --color-inferno-dark: var(--color-dark);
+    --color-inferno-bg: var(--color-bg);
+    --color-inferno-border: var(--color-border);
+    --color-inferno-ember: var(--color-ember);
 
     --font-mono: 'VT323', monospace;
 
-    --shadow-inferno: 0 0 10px rgba(255, 106, 0, 0.4);
+    --shadow-inferno: 0 0 10px var(--color-border);
 }
 
 /* Base Styles */
@@ -23,6 +115,7 @@ body {
     overflow-x: hidden;
     box-sizing: border-box;
     width: 100%;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 *,
@@ -31,7 +124,7 @@ body {
     box-sizing: inherit;
 }
 
-/* CRT Scanline Effect — Ember tint */
+/* CRT Scanline Effect — Theme-aware tint */
 .scanlines {
     position: fixed;
     top: 0;
@@ -39,7 +132,7 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(transparent 50%,
-            rgba(20, 5, 0, 0.15) 50%);
+            var(--color-primary-dim) 50%);
     background-size: 100% 3px;
     z-index: 100;
     pointer-events: none;
@@ -53,21 +146,21 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(18, 8, 4, 0.1);
+    background: var(--color-primary-dim);
     opacity: 0;
     z-index: 101;
     pointer-events: none;
     animation: flicker 0.15s infinite;
 }
 
-/* Moving Scanline Overlay — Fire glow */
+/* Moving Scanline Overlay — Theme-aware glow */
 .scanline-moving {
     width: 100%;
     height: 100px;
     z-index: 102;
     background: linear-gradient(0deg,
             rgba(0, 0, 0, 0) 0%,
-            rgba(255, 106, 0, 0.08) 50%,
+            var(--color-border) 50%,
             rgba(0, 0, 0, 0) 100%);
     opacity: 0.15;
     position: fixed;
@@ -173,13 +266,13 @@ body {
     }
 }
 
-/* Text Glow — Fire */
+/* Text Glow — Theme-aware */
 .text-glow {
     text-shadow: 0 0 5px var(--color-inferno), 0 0 10px var(--color-inferno), 0 0 20px var(--color-inferno-red);
 }
 
 .text-glow-sharp {
-    text-shadow: 0 0 2px var(--color-inferno), 0 0 4px rgba(255, 106, 0, 0.8);
+    text-shadow: 0 0 2px var(--color-inferno), 0 0 4px var(--color-border);
 }
 
 .border-glow {
@@ -193,7 +286,12 @@ body {
 }
 
 .codec-panel {
-    background: rgba(26, 10, 4, 0.8);
+    background: var(--color-inferno-bg);
     border: 1px solid var(--color-inferno);
-    box-shadow: inset 0 0 15px rgba(255, 68, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 15px var(--color-ember), 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Theme transition helper */
+.theme-transition {
+    transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
 }
